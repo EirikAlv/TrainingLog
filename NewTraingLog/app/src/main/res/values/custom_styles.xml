@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="customListViewStyle">
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">2dp</item>
+    </style>
+    <style name="customEditTextStyle">
+        <item name="android:background">@drawable/custom_edittext_shape</item>
+        <item name="android:paddingLeft">15dip</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+    </style>
+    <style name="customTextViewStyle">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@color/bottomNavBarColor</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="bottomNavStyle">
+        <item name="android:background">@color/bottomNavBarColor</item>
+        <item name="android:paddingTop">3dp</item>
+    </style>
+    <style name="homeButtonStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+</resources>

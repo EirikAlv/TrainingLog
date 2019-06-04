@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/createProgramButton"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="Create a custom program"
+        android:background="@drawable/bottomline"
+        />
+
+    <Button
+        android:id="@+id/logWorkoutButton"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/createProgramButton"
+        android:layout_marginTop="35dp"
+        android:text="Log your workout"
+        android:background="@drawable/bottomline"
+        />
+
+    <Button
+        android:id="@+id/displayLogMenuButton"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logWorkoutButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:text="Display your log"
+        android:background="@drawable/bottomline"
+        />
+
+    <Switch
+        android:id="@+id/mesure_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/lb_TV"
+        android:layout_marginTop="35dp"
+        />
+    <TextView
+        android:id="@+id/kg_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/mesure_switch"
+        android:text="Kg"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@color/textColor"
+        />
+    <TextView
+        android:id="@+id/lb_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:text="Lb"
+        android:textColor="@color/textColor"/>
+
+    <!--
+    <Button
+        android:id="@+id/displayDatabaseButton"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/displayLogMenuButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:text="About"
+        android:background="@drawable/bottomline"
+        />
+
+        -->
+</RelativeLayout>

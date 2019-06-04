@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/tittelTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        style="@style/customTextViewStyle"
+        />
+
+    <EditText
+        android:id="@+id/weightET"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tittelTV"
+        android:ems="10"
+        android:hint="Weight"
+        android:layout_alignParentLeft="true"
+        android:inputType="numberDecimal"
+        android:textSize="20dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="4dp"
+        style="@style/customEditTextStyle"
+        android:maxLength="6"
+        />
+
+    <EditText
+        android:id="@+id/repsET"
+        android:layout_toRightOf="@id/weightET"
+        android:layout_toLeftOf="@id/addButton"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/tittelTV"
+        style="@style/customEditTextStyle"
+        android:inputType="numberDecimal"
+        android:hint="Reps"
+        android:paddingTop="7dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:maxLength="6"
+        />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tittelTV"
+        android:text="Add"
+        android:layout_alignParentRight="true"
+        />
+
+    <ListView
+        android:id="@+id/log_workout_listView"
+        android:layout_width="match_parent"
+        android:layout_height="421dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="90dp"
+        android:padding="15dp"
+        android:layout_above="@+id/navigation"
+        style="@style/customListViewStyle"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation_items"
+        style="@style/bottomNavStyle"
+        app:itemIconTint="@color/bottomNavTint"
+        app:itemTextColor="@color/bottomTextColor"
+        />
+
+</RelativeLayout>

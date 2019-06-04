@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/choose_program_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="Display: Choose program"
+        style="@style/customTextViewStyle"/>
+
+    <ListView
+        android:id="@+id/displayProgramListview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/choose_program_TV"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:layout_above="@+id/navigation"
+        style="@style/customListViewStyle"
+        />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation_items"
+        style="@style/bottomNavStyle"
+        app:itemIconTint="@color/bottomNavTint"
+        app:itemTextColor="@color/bottomTextColor"
+
+        />
+
+</RelativeLayout>

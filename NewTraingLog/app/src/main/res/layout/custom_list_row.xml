@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_listview_item_shape"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/customTV"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/deleteButton"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_toLeftOf="@+id/deleteButton"
+        android:layout_toStartOf="@+id/deleteButton"
+        android:text="TextView"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        />
+
+    <ImageView
+        android:id="@+id/deleteButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:onClick="onDeleteButtonClick"
+        android:src="@drawable/outline_close_black_48dp" />
+
+</RelativeLayout>
