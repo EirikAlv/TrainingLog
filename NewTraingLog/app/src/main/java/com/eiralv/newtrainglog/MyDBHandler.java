@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
+import com.eiralv.newtrainglog.Log.Logging;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -281,20 +284,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
     public ArrayList<ListAdapterItem> getLogginPerExerciseDate(String exerciseName) {
 
-        /*TEEEEEST
-        ArrayList<String> list = new ArrayList<>();
-        if (android.os.Build.VERSION.SDK_INT >= 26) {
-            dato = LocalDate.now().toString();
-        }
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\"";
-        Cursor c = db.rawQuery(query, null);
-        while (c.moveToNext()) {
-            list.add(myOwnFormatter(c.getString(3)) + " " + c.getString(6) + " "
-                    + myOwnFormatter(c.getString(4)) + " reps");
-        }
-        */
         ArrayList<ListAdapterItem> list = new ArrayList<>();
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             dato = LocalDate.now().toString();
@@ -305,7 +294,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
 
-            list.add(new ListAdapterItem(c.getString(3) + " " + c.getString(6), c.getString(4) + "reps"));
+            list.add(new ListAdapterItem(c.getString(3) + " " + c.getString(6), c.getString(4) + " reps"));
         }
 
         c.close();

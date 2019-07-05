@@ -1,4 +1,4 @@
-package com.eiralv.newtrainglog;
+package com.eiralv.newtrainglog.Display;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,30 +8,31 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.apache.commons.io.FileUtils;
+import com.eiralv.newtrainglog.Adapter.DisplayLogRowAdapter;
+import com.eiralv.newtrainglog.HomeFragment;
+import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
+import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
-public class DisplayDatesFragment extends android.app.Fragment  {
+public class DisplayLogFragment extends android.app.Fragment {
 
-
-    private ListView displayDatesListview;
+    private ListView logListView;
     private ArrayAdapter listAdapter;
     private ArrayList<String> list;
     private String programName;
-    private DisplayDatesFragment thisFragment = this;
+    private String date;
+    private DisplayLogFragment thisFragment = this;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.display_dates_fragment, container, false);
+        View view = inflater.inflate(R.layout.display_log_fragment, container, false);
 
         //bottom navigation
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.navigation);
@@ -55,42 +56,27 @@ public class DisplayDatesFragment extends android.app.Fragment  {
         });
         bottomNavigationView.getMenu().findItem(R.id.display_item).setChecked(true);
 
-        Bundle bundle = getArguments();
-        programName = bundle.getString("programName");
 
-        displayDatesListview = (ListView) view.findViewById(R.id.displayDatesListview);
+        Bundle bundle = getArguments();
+        this.programName = bundle.getString("programName");
+        this.date = bundle.getString("dato");
+
+        logListView = (ListView) view.findViewById(R.id.logListView);
         list = new ArrayList<>();
 
         readItems();
-        listAdapter = new CustomBasicListAdapapter(getActivity(), list, this);
-        //listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-        displayDatesListview.setAdapter(listAdapter);
-
-        setupListViewListener();
+        listAdapter = new DisplayLogRowAdapter(this.getActivity(), list);
+        //listAdapter = new CustomListAdapter(getActivity(), list, this);
+        logListView.setAdapter(listAdapter);
 
         return view;
     }
 
-    private void setupListViewListener() {
-        displayDatesListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("dato", list.get(position));
-                bundle.putString("programName", programName);
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
-            }
-        });
-    }
-
-
-
     public void readItems() {
-        ArrayList<String> logger = ((MainActivity)getActivity()).dbHandler.datesToList(programName);
+        ArrayList<String> logger = ((MainActivity)getActivity()).dbHandler.loggingToList(programName, date);
         for (String s : logger) {
             list.add(s);
         }
-
     }
+
 }

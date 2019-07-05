@@ -12,7 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
+
+import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
+import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
 
 
 public class HomeFragment extends android.app.Fragment {

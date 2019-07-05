@@ -1,10 +1,8 @@
-package com.eiralv.newtrainglog;
+package com.eiralv.newtrainglog.Log;
 
-import android.app.Activity;
+
 import android.app.Fragment;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,23 +12,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
+import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
+import com.eiralv.newtrainglog.HomeFragment;
+import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
+import com.eiralv.newtrainglog.Adapter.LoggingListAdapter;
+import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class LogWorkout extends Fragment {
 
@@ -39,11 +34,8 @@ public class LogWorkout extends Fragment {
     private Button addButton;
     private ListView log_workout_listView;
     private TextView tittelTV;
-    //private CustomListAdapter listAdapter;
     private LoggingListAdapter loggingListAdapter;
     private ArrayList<ListAdapterItem> list;
-    private ArrayList<String> setsFile;
-    private String dato;
     private LogWorkout thisFragment = this;
 
 
@@ -95,10 +87,6 @@ public class LogWorkout extends Fragment {
         list = new ArrayList<>();
         readItems();
 
-        //TEEEEEEST
-        //listAdapter = new CustomListAdapter(getActivity(), list, this);
-        //log_workout_listView.setAdapter(listAdapter);
-
         loggingListAdapter = new LoggingListAdapter(getActivity(), list, this);
         log_workout_listView.setAdapter(loggingListAdapter);
 
@@ -138,8 +126,6 @@ public class LogWorkout extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String together = myOwnFormatter(weightET.getText().toString())+ " " + ((MainActivity)getActivity()).getMesurement()
-                        + " " + myOwnFormatter(repsET.getText().toString()) + " reps";
 
                 Logging logging = new Logging(programTittel, tittelTV.getText().toString(),
                         weightET.getText().toString(), repsET.getText().toString(),((MainActivity)getActivity()).getMesurement());
@@ -149,12 +135,8 @@ public class LogWorkout extends Fragment {
                         ((MainActivity)getActivity()).getMesurement(), repsET.getText().toString() + " reps");
                 list.add(0, item);
 
-                //TEESET
-                //list.add(0, together);
                 weightET.setText("");
                 repsET.setText("");
-                //listAdapter.notifyDataSetChanged();
-
 
                 loggingListAdapter.notifyDataSetChanged();
             }
@@ -165,37 +147,14 @@ public class LogWorkout extends Fragment {
         ((MainActivity)getActivity()).dbHandler.deleteLogLine(programTittel, exerciseTittel, line);
     }
     private void readItems() {
-         //TEEEEEEEEEEEST
-        ArrayList<ListAdapterItem> loggin = ((MainActivity)getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
-        if(!loggin.isEmpty()){
-            for (ListAdapterItem s : loggin) {
+        ArrayList<ListAdapterItem> logging = ((MainActivity)getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
+        if(!logging.isEmpty()){
+            for (ListAdapterItem s : logging) {
                 list.add(0, s);
             }
         }
-
-
     }
-    private String myOwnFormatter(String input) {
-        String output = input;
-        int lengde = output.length();
-        switch (lengde) {
-            case 6:
-                return output;
-            case 5:
-                return " " + output;
-            case 4:
-                return "  " + output;
-            case 3:
-                return "   " + output;
-            case 2:
-                return "    " + output;
-            case 1:
-                return "     " + output;
-            case 0:
-                return "0";
-        }
-        return output;
-    }
+
 
 
 }

@@ -1,8 +1,6 @@
-package com.eiralv.newtrainglog;
+package com.eiralv.newtrainglog.Adapter;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
@@ -12,16 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
+import com.eiralv.newtrainglog.CreateProgramFragment;
+import com.eiralv.newtrainglog.Log.ChooseExerciseFragment;
+import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
+import com.eiralv.newtrainglog.Log.LogWorkout;
+import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomListAdapter extends ArrayAdapter<String> {
 

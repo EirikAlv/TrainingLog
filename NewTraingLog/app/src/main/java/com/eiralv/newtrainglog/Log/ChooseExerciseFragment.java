@@ -1,4 +1,4 @@
-package com.eiralv.newtrainglog;
+package com.eiralv.newtrainglog.Log;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,17 +17,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
+import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
+import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
+import com.eiralv.newtrainglog.HomeFragment;
+import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.Ovelse;
+import com.eiralv.newtrainglog.ProgOvelseReg;
+import com.eiralv.newtrainglog.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 
 public class ChooseExerciseFragment extends android.app.Fragment {
 

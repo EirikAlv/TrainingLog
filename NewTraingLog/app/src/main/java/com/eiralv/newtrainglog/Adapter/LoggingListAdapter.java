@@ -1,4 +1,4 @@
-package com.eiralv.newtrainglog;
+package com.eiralv.newtrainglog.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
+import com.eiralv.newtrainglog.Log.LogWorkout;
+import com.eiralv.newtrainglog.R;
+
 import java.util.ArrayList;
 
 public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {

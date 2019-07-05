@@ -1,4 +1,4 @@
-package com.eiralv.newtrainglog;
+package com.eiralv.newtrainglog.Adapter;
 
 public class ListAdapterItem {
 

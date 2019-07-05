@@ -1,5 +1,4 @@
-package com.eiralv.newtrainglog;
-
+package com.eiralv.newtrainglog.Log;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,22 +10,29 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
+import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
+import com.eiralv.newtrainglog.HomeFragment;
+import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
 
-public class DisplayChooseProgramFragment extends android.app.Fragment {
+public class ChooseProgramFragment extends android.app.Fragment {
 
-
-    private ListView displayProgramListview;
+    private TextView list_item_title;
+    private ListView list_item_ListView;
     private ArrayList<String> list;
     private ArrayAdapter<String> listAdapter;
-    private DisplayChooseProgramFragment thisFragment = this;
+    private final ChooseProgramFragment thisFragment = this;
 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.display_choose_program_fragment, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.choose_program_fragment, container, false);
 
         //bottom navigation
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.navigation);
@@ -48,16 +54,21 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
                 return true;
             }
         });
-        bottomNavigationView.getMenu().findItem(R.id.display_item).setChecked(true);
+        bottomNavigationView.getMenu().findItem(R.id.log_item).setChecked(true);
 
 
-        displayProgramListview = (ListView) view.findViewById(R.id.displayProgramListview);
+
+        //set title of fragment
+        list_item_title = (TextView) view.findViewById(R.id.list_item_title);
+        list_item_title.setText("Log: Choose Program");
+
+
+        //handling listview, and setting adapter
+        list_item_ListView = (ListView) view.findViewById(R.id.list_item_ListView);
         list = new ArrayList<>();
         readItems();
-        listAdapter = new CustomBasicListAdapapter(getActivity(), list, this);
-        //listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-        //listAdapter = new CustomListAdapter(getActivity(), list, this);
-        displayProgramListview.setAdapter(listAdapter);
+        listAdapter = new CustomListAdapter(getActivity(), list, this);
+        list_item_ListView.setAdapter(listAdapter);
 
         setupListViewListener();
 
@@ -65,13 +76,14 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
     }
 
     private void setupListViewListener() {
-        displayProgramListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list_item_ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Bundle bundle = new Bundle();
-                bundle.putString("programName", list.get(position));
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayDatesFragment(), bundle);
+                bundle.putString("programTittel", list.get(position));
+                ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
+
             }
         });
     }
@@ -82,4 +94,5 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
             list.add(s);
         }
     }
+
 }
