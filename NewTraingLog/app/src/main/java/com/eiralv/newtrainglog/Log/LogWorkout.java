@@ -23,6 +23,7 @@ import com.eiralv.newtrainglog.HomeFragment;
 import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
 import com.eiralv.newtrainglog.Adapter.LoggingListAdapter;
 import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
@@ -50,29 +51,7 @@ public class LogWorkout extends Fragment {
         final View view = inflater.inflate(R.layout.log_workout_fragment, container, false);
 
         //bottom navigation
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new HomeFragment(), null);
-                        break;
-                    case R.id.log_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseProgramFragment(), null);
-                        break;
-                    case R.id.display_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayChooseProgramFragment(), null);
-                        break;
-                }
-                //hideKeyboardFrom(getActivity(), view);
-                ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-                return true;
-            }
-        });
-        bottomNavigationView.getMenu().findItem(R.id.log_item).setChecked(true);
+        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
 
 
         Bundle bundle = getArguments();

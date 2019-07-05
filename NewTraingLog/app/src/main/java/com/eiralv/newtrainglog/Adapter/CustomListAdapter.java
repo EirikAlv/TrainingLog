@@ -7,11 +7,14 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.eiralv.newtrainglog.CreateProgramFragment;
@@ -50,13 +53,15 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         final String currentText = list.get(position);
 
-        customTV = (TextView) customView.findViewById(R.id.customTV);
-        deleteButton = (ImageView ) customView.findViewById(R.id.deleteButton);
+        customTV = customView.findViewById(R.id.customTV);
+        deleteButton = customView.findViewById(R.id.deleteButton);
         customTV.setText(currentText);
+        /*
         if(fragment.getClass() == LogWorkout.class) {
             customTV.setTypeface(Typeface.MONOSPACE);
             customTV.setTextSize(20);
         }
+        */
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,28 +69,20 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
                 if(fragment.getClass() == ChooseProgramFragment.class) {
 
-                    //Dialog window to ask if you are sure you want to delete program and its content
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
-                    alertDialogBuilder.setMessage("Are you sure you want to delete this program and its content ?");
-                    alertDialogBuilder.setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ((MainActivity)getContext()).dbHandler.deleteProgram(currentText);
-                            list.remove(currentText);
-                            notifyDataSetChanged();
-                        }
-                    });
-                    alertDialogBuilder.setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            return;
-                        }
-                    });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-                    alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.alertButtons));
-                    alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.alertButtons));
+                    final PopupMenu popupMenu = new PopupMenu(v.getContext(), deleteButton);
+                    popupMenu.getMenuInflater().inflate(R.menu.edit_prog_popup_menu, popupMenu.getMenu());
 
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            //Toast.makeText(getContext(), "you clicked this: " + menuItem.getTitle(), Toast.LENGTH_LONG).show();
+                            if(menuItem.getTitle().equals("Delete")){
+                                alertDialogDelete(currentText);
+                            }
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
 
                 }
                 /*else if (fragment.getClass() == LogWorkout.class) {
@@ -109,5 +106,34 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         });
         return customView;
     }
+
+
+    /**
+     * @param currentText
+     * Dialog window to ask if you are sure you want to delete program and its content
+     */
+    private void alertDialogDelete(final String currentText) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setMessage("Are you sure you want to delete this program and its content ?");
+        alertDialogBuilder.setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ((MainActivity)getContext()).dbHandler.deleteProgram(currentText);
+                list.remove(currentText);
+                notifyDataSetChanged();
+            }
+        });
+        alertDialogBuilder.setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.alertButtons));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.alertButtons));
+    }
+
 
 }

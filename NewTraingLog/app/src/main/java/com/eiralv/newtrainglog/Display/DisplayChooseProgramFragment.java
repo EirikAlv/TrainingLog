@@ -16,6 +16,7 @@ import com.eiralv.newtrainglog.Adapter.CustomBasicListAdapapter;
 import com.eiralv.newtrainglog.HomeFragment;
 import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
 import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
@@ -35,27 +36,7 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.display_choose_program_fragment, container, false);
 
         //bottom navigation
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new HomeFragment(), null);
-                        break;
-                    case R.id.log_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseProgramFragment(), null);
-                        break;
-                    case R.id.display_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayChooseProgramFragment(), null);
-                        break;
-                }
-                return true;
-            }
-        });
-        bottomNavigationView.getMenu().findItem(R.id.display_item).setChecked(true);
-
+        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
 
         displayProgramListview = (ListView) view.findViewById(R.id.displayProgramListview);
         list = new ArrayList<>();

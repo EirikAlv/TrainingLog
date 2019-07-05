@@ -16,6 +16,7 @@ import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
 import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
 import com.eiralv.newtrainglog.HomeFragment;
 import com.eiralv.newtrainglog.MainActivity;
+import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
@@ -35,26 +36,7 @@ public class ChooseProgramFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.choose_program_fragment, container, false);
 
         //bottom navigation
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new HomeFragment(), null);
-                        break;
-                    case R.id.log_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseProgramFragment(), null);
-                        break;
-                    case R.id.display_item:
-                        ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayChooseProgramFragment(), null);
-                        break;
-                }
-                return true;
-            }
-        });
-        bottomNavigationView.getMenu().findItem(R.id.log_item).setChecked(true);
+        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
 
 
 
@@ -64,7 +46,7 @@ public class ChooseProgramFragment extends android.app.Fragment {
 
 
         //handling listview, and setting adapter
-        list_item_ListView = (ListView) view.findViewById(R.id.list_item_ListView);
+        list_item_ListView = view.findViewById(R.id.list_item_ListView);
         list = new ArrayList<>();
         readItems();
         listAdapter = new CustomListAdapter(getActivity(), list, this);
