@@ -37,7 +37,7 @@ public class CustomBasicListAdapapter extends ArrayAdapter<String> {
         }
         final String currentText = list.get(position);
 
-        basic_list_row_text_view = (TextView) customView.findViewById(R.id.basic_list_row_text_view);
+        basic_list_row_text_view = customView.findViewById(R.id.basic_list_row_text_view);
         basic_list_row_text_view.setText(currentText);
 
         return customView;

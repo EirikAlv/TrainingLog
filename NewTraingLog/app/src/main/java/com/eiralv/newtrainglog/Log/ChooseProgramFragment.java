@@ -2,9 +2,7 @@ package com.eiralv.newtrainglog.Log;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,8 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
-import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
-import com.eiralv.newtrainglog.HomeFragment;
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.R;
@@ -36,12 +32,10 @@ public class ChooseProgramFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.choose_program_fragment, container, false);
 
         //bottom navigation
-        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
-
-
+        new MyBottomNavigationView(thisFragment, view);
 
         //set title of fragment
-        list_item_title = (TextView) view.findViewById(R.id.list_item_title);
+        list_item_title = view.findViewById(R.id.list_item_title);
         list_item_title.setText("Log: Choose Program");
 
 
@@ -49,6 +43,7 @@ public class ChooseProgramFragment extends android.app.Fragment {
         list_item_ListView = view.findViewById(R.id.list_item_ListView);
         list = new ArrayList<>();
         readItems();
+
         listAdapter = new CustomListAdapter(getActivity(), list, this);
         list_item_ListView.setAdapter(listAdapter);
 
@@ -61,7 +56,6 @@ public class ChooseProgramFragment extends android.app.Fragment {
         list_item_ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Bundle bundle = new Bundle();
                 bundle.putString("programTittel", list.get(position));
                 ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);

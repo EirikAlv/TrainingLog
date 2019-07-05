@@ -36,19 +36,18 @@ public class DisplayLogFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.display_log_fragment, container, false);
 
         //bottom navigation
-        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view);
 
 
         Bundle bundle = getArguments();
         this.programName = bundle.getString("programName");
         this.date = bundle.getString("dato");
 
-        logListView = (ListView) view.findViewById(R.id.logListView);
+        logListView = view.findViewById(R.id.logListView);
         list = new ArrayList<>();
 
         readItems();
         listAdapter = new DisplayLogRowAdapter(this.getActivity(), list);
-        //listAdapter = new CustomListAdapter(getActivity(), list, this);
         logListView.setAdapter(listAdapter);
 
         return view;

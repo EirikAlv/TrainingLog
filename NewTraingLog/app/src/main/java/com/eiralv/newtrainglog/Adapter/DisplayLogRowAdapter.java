@@ -33,7 +33,7 @@ public class DisplayLogRowAdapter extends ArrayAdapter<String> {
         }
         final String currentText = list.get(position);
 
-        display_log_row_text_view = (TextView) customView.findViewById(R.id.display_log_row_text_view);
+        display_log_row_text_view = customView.findViewById(R.id.display_log_row_text_view);
         display_log_row_text_view.setText(currentText);
 
         return customView;

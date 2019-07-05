@@ -1,11 +1,8 @@
 package com.eiralv.newtrainglog.Display;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eiralv.newtrainglog.Adapter.CustomBasicListAdapapter;
-import com.eiralv.newtrainglog.HomeFragment;
-import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.R;
@@ -36,17 +31,16 @@ public class DisplayDatesFragment extends android.app.Fragment  {
         View view = inflater.inflate(R.layout.display_dates_fragment, container, false);
 
         //bottom navigation
-        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view);
 
         Bundle bundle = getArguments();
         programName = bundle.getString("programName");
 
-        displayDatesListview = (ListView) view.findViewById(R.id.displayDatesListview);
+        displayDatesListview = view.findViewById(R.id.displayDatesListview);
         list = new ArrayList<>();
 
         readItems();
         listAdapter = new CustomBasicListAdapapter(getActivity(), list, this);
-        //listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         displayDatesListview.setAdapter(listAdapter);
 
         setupListViewListener();

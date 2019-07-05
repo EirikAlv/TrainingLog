@@ -51,7 +51,7 @@ public class LogWorkout extends Fragment {
         final View view = inflater.inflate(R.layout.log_workout_fragment, container, false);
 
         //bottom navigation
-        MyBottomNavigationView bottom = new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view);
 
 
         Bundle bundle = getArguments();
@@ -100,7 +100,7 @@ public class LogWorkout extends Fragment {
         });
 
         //ADD BUTTON HANDLING
-        addButton = (Button) view.findViewById(R.id.addButton);
+        addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

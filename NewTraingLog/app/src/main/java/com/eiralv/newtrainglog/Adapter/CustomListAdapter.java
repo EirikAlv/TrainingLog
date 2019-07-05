@@ -1,9 +1,10 @@
 package com.eiralv.newtrainglog.Adapter;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,13 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.eiralv.newtrainglog.CreateProgramFragment;
-import com.eiralv.newtrainglog.Log.ChooseExerciseFragment;
+import com.eiralv.newtrainglog.Log.EditExerciseFragment;
 import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
-import com.eiralv.newtrainglog.Log.LogWorkout;
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
 
@@ -32,9 +31,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private TextView customTV;
     private Context context;
     private ArrayList<String> list;
-    private Object fragment;
+    private Fragment fragment;
 
-    public CustomListAdapter(@NonNull Context context, ArrayList<String> list, Object fragment) {
+    public CustomListAdapter(@NonNull Context context, ArrayList<String> list, Fragment fragment) {
         super(context, R.layout.custom_list_row, list);
         this.context = context;
         this.list = list;
@@ -56,12 +55,6 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         customTV = customView.findViewById(R.id.customTV);
         deleteButton = customView.findViewById(R.id.deleteButton);
         customTV.setText(currentText);
-        /*
-        if(fragment.getClass() == LogWorkout.class) {
-            customTV.setTypeface(Typeface.MONOSPACE);
-            customTV.setTextSize(20);
-        }
-        */
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +71,10 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                             //Toast.makeText(getContext(), "you clicked this: " + menuItem.getTitle(), Toast.LENGTH_LONG).show();
                             if(menuItem.getTitle().equals("Delete")){
                                 alertDialogDelete(currentText);
+                            }else if(menuItem.getTitle().equals("Edit")){
+                                Bundle bundle = new Bundle();
+                                bundle.putString("programTittel", currentText);
+                                ((MainActivity)context).switchScreen(fragment, new EditExerciseFragment(), bundle);
                             }
                             return true;
                         }
@@ -85,14 +82,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                     popupMenu.show();
 
                 }
-                /*else if (fragment.getClass() == LogWorkout.class) {
-                    //INSERT DELTE METHOD CALL HERE
-                    ((LogWorkout) fragment).deleteLogLine(currentText);
-                    list.remove(currentText);
-                    notifyDataSetChanged();
-                }*/
-                else if (fragment.getClass() == ChooseExerciseFragment.class) {
-                    ((ChooseExerciseFragment) fragment).deleteExercise(currentText);
+
+                else if (fragment.getClass() == EditExerciseFragment.class) {
+                    ((EditExerciseFragment) fragment).deleteExercise(currentText);
                     list.remove(currentText);
                     notifyDataSetChanged();
                 }else if (fragment.getClass() == CreateProgramFragment.class) {
