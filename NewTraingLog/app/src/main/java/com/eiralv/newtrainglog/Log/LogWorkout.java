@@ -38,11 +38,8 @@ public class LogWorkout extends Fragment {
     private LoggingListAdapter loggingListAdapter;
     private ArrayList<ListAdapterItem> list;
     private LogWorkout thisFragment = this;
-
-
     private String exerciseTittel;
     private String programTittel;
-
 
     @Nullable
     @Override
@@ -53,16 +50,14 @@ public class LogWorkout extends Fragment {
         //bottom navigation
         new MyBottomNavigationView(thisFragment, view);
 
-
         Bundle bundle = getArguments();
         this.exerciseTittel = bundle.getString("exerciseTittel");
         this.programTittel = bundle.getString("programTittel");
         tittelTV = view.findViewById(R.id.tittelTV);
         tittelTV.setText(exerciseTittel);
 
-
         //handling listview
-        log_workout_listView = (ListView) view.findViewById(R.id.log_workout_listView);
+        log_workout_listView = view.findViewById(R.id.log_workout_listView);
         list = new ArrayList<>();
         readItems();
 
@@ -70,8 +65,8 @@ public class LogWorkout extends Fragment {
         log_workout_listView.setAdapter(loggingListAdapter);
 
         //EDIT TEXT HANDLING
-        weightET = (EditText) view.findViewById(R.id.weightET);
-        repsET = (EditText) view.findViewById(R.id.repsET);
+        weightET = view.findViewById(R.id.weightET);
+        repsET = view.findViewById(R.id.repsET);
 
 
         //((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -80,7 +75,7 @@ public class LogWorkout extends Fragment {
         weightET.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
                     repsET.requestFocus();
                     return true;
                 }
@@ -90,7 +85,7 @@ public class LogWorkout extends Fragment {
         repsET.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
                     addButton.callOnClick();
                     weightET.requestFocus();
                     return true;
@@ -105,13 +100,18 @@ public class LogWorkout extends Fragment {
             @Override
             public void onClick(View view) {
 
+                if (weightET.getText().toString().equals("")) {
+                    weightET.setText("0");
+                }
+                if (repsET.getText().toString().equals("")) {
+                    repsET.setText("0");
+                }
 
-                Logging logging = new Logging(programTittel, tittelTV.getText().toString(),
-                        weightET.getText().toString(), repsET.getText().toString(),((MainActivity)getActivity()).getMesurement());
-                ((MainActivity)getActivity()).dbHandler.saveToLogging(logging);
+                ((MainActivity) getActivity()).dbHandler.saveToLogging(new Logging(programTittel, tittelTV.getText().toString(),
+                        weightET.getText().toString(), repsET.getText().toString(), ((MainActivity) getActivity()).getMesurement()));
 
                 ListAdapterItem item = new ListAdapterItem(weightET.getText().toString() + " " +
-                        ((MainActivity)getActivity()).getMesurement(), repsET.getText().toString() + " reps");
+                        ((MainActivity) getActivity()).getMesurement(), repsET.getText().toString() + " reps");
                 list.add(0, item);
 
                 weightET.setText("");
@@ -122,18 +122,19 @@ public class LogWorkout extends Fragment {
         });
         return view;
     }
+
     public void deleteLogLine(ListAdapterItem line) {
-        ((MainActivity)getActivity()).dbHandler.deleteLogLine(programTittel, exerciseTittel, line);
+        ((MainActivity) getActivity()).dbHandler.deleteLogLine(programTittel, exerciseTittel, line);
     }
+
     private void readItems() {
-        ArrayList<ListAdapterItem> logging = ((MainActivity)getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
-        if(!logging.isEmpty()){
+        ArrayList<ListAdapterItem> logging = ((MainActivity) getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
+        if (!logging.isEmpty()) {
             for (ListAdapterItem s : logging) {
                 list.add(0, s);
             }
         }
     }
-
 
 
 }
