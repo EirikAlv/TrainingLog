@@ -279,7 +279,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return list;
     }
-    public ArrayList<String> getLogginPerExerciseDate(String exerciseName) {
+    public ArrayList<ListAdapterItem> getLogginPerExerciseDate(String exerciseName) {
+
+        /*TEEEEEST
         ArrayList<String> list = new ArrayList<>();
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             dato = LocalDate.now().toString();
@@ -292,6 +294,20 @@ public class MyDBHandler extends SQLiteOpenHelper {
             list.add(myOwnFormatter(c.getString(3)) + " " + c.getString(6) + " "
                     + myOwnFormatter(c.getString(4)) + " reps");
         }
+        */
+        ArrayList<ListAdapterItem> list = new ArrayList<>();
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            dato = LocalDate.now().toString();
+        }
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
+                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+
+            list.add(new ListAdapterItem(c.getString(3) + " " + c.getString(6), c.getString(4) + "reps"));
+        }
+
         c.close();
         db.close();
         return list;
@@ -315,8 +331,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     //METHOD TO DELETE A LOG SPECIFIED LOG LINE
-    public void deleteLogLine(String programName,String exerciseTitle, String line) {
-        line = line.replaceAll("\\s+","");
+    public void deleteLogLine(String programName, String exerciseTitle, ListAdapterItem item) {
+        String line = item.getWeight() + item.getReps();
+        line = line.replaceAll("\\s+|\\D","");
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             dato = LocalDate.now().toString();
         }
@@ -326,7 +343,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         String output;
         while (c.moveToNext()) {
-            output = c.getString(3) + "kg" + c.getString(4) + "reps";
+            output = c.getString(3) + c.getString(4);
             if (output.equals(line)) {
                 db.execSQL("delete from " + TABLE_LOGGING + " where " + COLUMN_ID + "= \"" + c.getString(0) + "\"");
                 return;

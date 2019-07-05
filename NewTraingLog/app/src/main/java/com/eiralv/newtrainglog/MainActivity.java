@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
     public MyDBHandler dbHandler;
     private String mesurement;
     @Override

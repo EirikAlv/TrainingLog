@@ -87,12 +87,14 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                     alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.alertButtons));
 
 
-                }else if (fragment.getClass() == LogWorkout.class) {
+                }
+                /*else if (fragment.getClass() == LogWorkout.class) {
                     //INSERT DELTE METHOD CALL HERE
                     ((LogWorkout) fragment).deleteLogLine(currentText);
                     list.remove(currentText);
                     notifyDataSetChanged();
-                }else if (fragment.getClass() == ChooseExerciseFragment.class) {
+                }*/
+                else if (fragment.getClass() == ChooseExerciseFragment.class) {
                     ((ChooseExerciseFragment) fragment).deleteExercise(currentText);
                     list.remove(currentText);
                     notifyDataSetChanged();

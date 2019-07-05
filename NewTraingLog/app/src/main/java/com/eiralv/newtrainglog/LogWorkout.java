@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class LogWorkout extends Fragment {
 
@@ -38,8 +39,9 @@ public class LogWorkout extends Fragment {
     private Button addButton;
     private ListView log_workout_listView;
     private TextView tittelTV;
-    private CustomListAdapter listAdapter;
-    private ArrayList<String> list;
+    //private CustomListAdapter listAdapter;
+    private LoggingListAdapter loggingListAdapter;
+    private ArrayList<ListAdapterItem> list;
     private ArrayList<String> setsFile;
     private String dato;
     private LogWorkout thisFragment = this;
@@ -93,8 +95,12 @@ public class LogWorkout extends Fragment {
         list = new ArrayList<>();
         readItems();
 
-        listAdapter = new CustomListAdapter(getActivity(), list, this);
-        log_workout_listView.setAdapter(listAdapter);
+        //TEEEEEEST
+        //listAdapter = new CustomListAdapter(getActivity(), list, this);
+        //log_workout_listView.setAdapter(listAdapter);
+
+        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this);
+        log_workout_listView.setAdapter(loggingListAdapter);
 
         //EDIT TEXT HANDLING
         weightET = (EditText) view.findViewById(R.id.weightET);
@@ -139,24 +145,34 @@ public class LogWorkout extends Fragment {
                         weightET.getText().toString(), repsET.getText().toString(),((MainActivity)getActivity()).getMesurement());
                 ((MainActivity)getActivity()).dbHandler.saveToLogging(logging);
 
-                list.add(0, together);
+                ListAdapterItem item = new ListAdapterItem(weightET.getText().toString() + " " +
+                        ((MainActivity)getActivity()).getMesurement(), repsET.getText().toString() + " reps");
+                list.add(0, item);
+
+                //TEESET
+                //list.add(0, together);
                 weightET.setText("");
                 repsET.setText("");
-                listAdapter.notifyDataSetChanged();
+                //listAdapter.notifyDataSetChanged();
+
+
+                loggingListAdapter.notifyDataSetChanged();
             }
         });
         return view;
     }
-    public void deleteLogLine(String line) {
+    public void deleteLogLine(ListAdapterItem line) {
         ((MainActivity)getActivity()).dbHandler.deleteLogLine(programTittel, exerciseTittel, line);
     }
     private void readItems() {
-        ArrayList<String> loggin = ((MainActivity)getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
+         //TEEEEEEEEEEEST
+        ArrayList<ListAdapterItem> loggin = ((MainActivity)getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
         if(!loggin.isEmpty()){
-            for (String s : loggin) {
+            for (ListAdapterItem s : loggin) {
                 list.add(0, s);
             }
         }
+
 
     }
     private String myOwnFormatter(String input) {
