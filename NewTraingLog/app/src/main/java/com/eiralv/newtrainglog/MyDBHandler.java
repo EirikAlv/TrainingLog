@@ -202,6 +202,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return dbString;
     }
 
+    /**
+     * @return list of all programs
+     */
     public ArrayList<String> programToList() {
         ArrayList<String> list = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
@@ -362,6 +365,23 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return output;
     }
 
+    public ArrayList<ListAdapterItem> getLogLinePerExerciseDate(String exerciseName, String date) {
+        ArrayList<ListAdapterItem> returnList = new ArrayList<>();
+
+        this.dato = date;
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
+                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            returnList.add(new ListAdapterItem(c.getString(3) + " " + c.getString(6), c.getString(4) + " reps"));
+        }
+
+        c.close();
+        db.close();
+
+        return returnList;
+    }
 }
 
 
