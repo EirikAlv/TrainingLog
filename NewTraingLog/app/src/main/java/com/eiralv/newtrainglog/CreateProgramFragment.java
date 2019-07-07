@@ -99,7 +99,7 @@ public class CreateProgramFragment extends android.app.Fragment {
                         }
                     }
                 });
-                Button cancelButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
+                Button cancelButton = (dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -131,8 +131,8 @@ public class CreateProgramFragment extends android.app.Fragment {
         }
 
         //"add" button handling
-        setET = (EditText) view.findViewById(R.id.setET);
-        submitButton = (Button) view.findViewById(R.id.submitButton);
+        setET = view.findViewById(R.id.setET);
+        submitButton = view.findViewById(R.id.submitButton);
         setET.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

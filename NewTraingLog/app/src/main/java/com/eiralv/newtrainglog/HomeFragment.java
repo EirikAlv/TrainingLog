@@ -78,7 +78,7 @@ public class HomeFragment extends android.app.Fragment {
         */
 
         //switch handling
-        mesure_switch = (Switch) view.findViewById(R.id.mesure_switch);
+        mesure_switch = view.findViewById(R.id.mesure_switch);
         mesure_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

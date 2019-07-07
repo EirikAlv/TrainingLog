@@ -13,19 +13,22 @@ public class MyBottomNavigationView {
 
     public MyBottomNavigationView(final Fragment thisFragment, final View view) {
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.navigation);
+        BottomNavigationView bottomNavigationView = view.findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
                     case R.id.home_item:
+                        HomeFragment.hideKeyboardFrom(view.getContext(), view);
                         ((MainActivity)view.getContext()).switchScreen(thisFragment, new HomeFragment(), null);
                         break;
                     case R.id.log_item:
+                        HomeFragment.hideKeyboardFrom(view.getContext(), view);
                         ((MainActivity)view.getContext()).switchScreen(thisFragment, new ChooseProgramFragment(), null);
                         break;
                     case R.id.display_item:
+                        HomeFragment.hideKeyboardFrom(view.getContext(), view);
                         ((MainActivity)view.getContext()).switchScreen(thisFragment, new DisplayChooseProgramFragment(), null);
                         break;
                 }
