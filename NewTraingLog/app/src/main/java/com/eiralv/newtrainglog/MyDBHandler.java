@@ -231,6 +231,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return list;
     }
+    public ArrayList<String> getExercisePerProgramDate(String programName, String dato) {
+        String query2 = "select distinct OvelseNavn from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
+                COLUMN_DATO + "= \"" + dato + "\"";
+        ArrayList<String> ovelser = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(query2, null);
+        while(cursor.moveToNext()) {
+            ovelser.add(cursor.getString(0));
+        }
+        cursor.close();
+        db.close();
+        return ovelser;
+    }
 
     public ArrayList<String> loggingToList(String programName, String dato) {
         ArrayList<String> list = new ArrayList<>();
@@ -285,6 +298,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return list;
     }
+
     public ArrayList<ListAdapterItem> getLogginPerExerciseDate(String exerciseName) {
 
         ArrayList<ListAdapterItem> list = new ArrayList<>();
