@@ -44,25 +44,15 @@ public class DisplayLogRowAdapter extends ArrayAdapter<String> {
 
         LinearLayout linList = customView.findViewById(R.id.linear_list);
         linList.removeAllViews();
-/*
-        for (ListAdapterItem tekst : tekstList) {
-            View line = layoutInflater.inflate(R.layout.display_log_row, null);
-            TextView weightTV = line.findViewById(R.id.weightTV);
-            TextView repsTV = line.findViewById(R.id.repsTV);
-            weightTV.setText(tekst.getWeight());
-            repsTV.setText(tekst.getReps());
 
-            linList.addView(line);
-        }
-        */
         for(int i = 0; i < tekstList.size(); i++) {
             View line = layoutInflater.inflate(R.layout.display_log_row, null);
             TextView weightTV = line.findViewById(R.id.weightTV);
             TextView mesurementTV = line.findViewById(R.id.mesurementTV);
             TextView repsTV = line.findViewById(R.id.repsTV);
-            weightTV.setText(tekstList.get(position).getWeight());
-            mesurementTV.setText(mesureListe.get(position));
-            repsTV.setText(tekstList.get(position).getReps());
+            weightTV.setText(tekstList.get(i).getWeight());
+            mesurementTV.setText(mesureListe.get(i));
+            repsTV.setText(tekstList.get(i).getReps());
 
             linList.addView(line);
         }
