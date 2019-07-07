@@ -348,6 +348,41 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         return returnList;
     }
+
+    public ArrayList<ListAdapterItem> getLogLinePerExerciseDateNoMesurement(String exerciseName, String date) {
+        ArrayList<ListAdapterItem> returnList = new ArrayList<>();
+
+        this.dato = date;
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
+                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            returnList.add(new ListAdapterItem(c.getString(3), c.getString(4)));
+        }
+
+        c.close();
+        db.close();
+
+        return returnList;
+    }
+
+    public ArrayList<String> getMesurementPerExerciseDate(String exerciseName, String date) {
+        ArrayList<String> returnList = new ArrayList<>();
+        this.dato = date;
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
+                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            returnList.add(c.getString(6));
+        }
+
+        c.close();
+        db.close();
+
+        return returnList;
+    }
 }
 
 

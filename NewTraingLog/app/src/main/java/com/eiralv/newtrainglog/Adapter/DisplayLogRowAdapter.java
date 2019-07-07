@@ -35,27 +35,34 @@ public class DisplayLogRowAdapter extends ArrayAdapter<String> {
         if (customView == null) {
             customView = layoutInflater.inflate(R.layout.list_in_list, parent, false);
         }
-        /*
-        final String currentText = list.get(position);
-        display_log_row_text_view = customView.findViewById(R.id.display_log_row_text_view);
-        display_log_row_text_view.setText(currentText);
-        */
 
         TextView titleTv = customView.findViewById(R.id.titleTv);
         titleTv.setText(list.get(position));
 
-        ArrayList<ListAdapterItem> tekstList = ((MainActivity)context).dbHandler.getLogLinePerExerciseDate(list.get(position), date);
-
+        ArrayList<ListAdapterItem> tekstList = ((MainActivity)context).dbHandler.getLogLinePerExerciseDateNoMesurement(list.get(position), date);
+        ArrayList<String> mesureListe = ((MainActivity)context).dbHandler.getMesurementPerExerciseDate(list.get(position), date);
 
         LinearLayout linList = customView.findViewById(R.id.linear_list);
         linList.removeAllViews();
-
+/*
         for (ListAdapterItem tekst : tekstList) {
             View line = layoutInflater.inflate(R.layout.display_log_row, null);
             TextView weightTV = line.findViewById(R.id.weightTV);
             TextView repsTV = line.findViewById(R.id.repsTV);
             weightTV.setText(tekst.getWeight());
             repsTV.setText(tekst.getReps());
+
+            linList.addView(line);
+        }
+        */
+        for(int i = 0; i < tekstList.size(); i++) {
+            View line = layoutInflater.inflate(R.layout.display_log_row, null);
+            TextView weightTV = line.findViewById(R.id.weightTV);
+            TextView mesurementTV = line.findViewById(R.id.mesurementTV);
+            TextView repsTV = line.findViewById(R.id.repsTV);
+            weightTV.setText(tekstList.get(position).getWeight());
+            mesurementTV.setText(mesureListe.get(position));
+            repsTV.setText(tekstList.get(position).getReps());
 
             linList.addView(line);
         }

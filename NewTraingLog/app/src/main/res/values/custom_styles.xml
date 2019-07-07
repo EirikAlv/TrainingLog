@@ -25,4 +25,10 @@
     <style name="homeButtonStyle" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
+    <style name="historyRowTextView">
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

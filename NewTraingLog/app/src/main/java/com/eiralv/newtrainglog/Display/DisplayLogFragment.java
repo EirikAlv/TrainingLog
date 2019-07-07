@@ -47,8 +47,6 @@ public class DisplayLogFragment extends android.app.Fragment {
 
         list = ((MainActivity)getActivity()).dbHandler.getExercisePerProgramDate(programName, date);
 
-
-
         listAdapter = new DisplayLogRowAdapter(this.getActivity(), list, date);
         logListView.setAdapter(listAdapter);
 
