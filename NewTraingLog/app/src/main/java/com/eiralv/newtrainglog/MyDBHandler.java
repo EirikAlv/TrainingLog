@@ -245,33 +245,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return ovelser;
     }
 
-    public ArrayList<String> loggingToList(String programName, String dato) {
-        ArrayList<String> list = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
-                COLUMN_DATO + "= \"" + dato + "\"";
-        String query2 = "select distinct OvelseNavn from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
-                COLUMN_DATO + "= \"" + dato + "\"";
-        Cursor cursor = db.rawQuery(query2, null);
-        Cursor c = db.rawQuery(query, null);
-        ArrayList<String> ovelser = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            ovelser.add(cursor.getString(0));
-        }
-        for (String ovelse : ovelser) {
-            list.add(ovelse);
-            while (c.moveToNext()) {
-                if(ovelse.equals(c.getString(2))) {
-                    list.add("  " + myOwnFormatter(c.getString(3)) + " " + c.getString(6) + " "
-                            + myOwnFormatter(c.getString(4)) + " reps");
-                }
-            }
-            c.moveToFirst();
-        }
-        c.close();
-        db.close();
-        return list;
-    }
 
     //only a helper method for loggingToList(), the same as getExercisesPerProgram() but without closing db
     private ArrayList<String> privateGetExercisesPerProgram(String progName) {
@@ -356,27 +329,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
             }
         }
         c.close();
-    }
-    private String myOwnFormatter(String input) {
-        String output = input;
-        int lengde = output.length();
-        switch (lengde) {
-            case 6:
-                return output;
-            case 5:
-                return " " + output;
-            case 4:
-                return "  " + output;
-            case 3:
-                return "   " + output;
-            case 2:
-                return "    " + output;
-            case 1:
-                return "     " + output;
-            case 0:
-                return "0";
-        }
-        return output;
     }
 
     public ArrayList<ListAdapterItem> getLogLinePerExerciseDate(String exerciseName, String date) {
