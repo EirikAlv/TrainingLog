@@ -36,6 +36,9 @@ public class EditExerciseFragment extends android.app.Fragment {
     private ImageButton saveEditButton;
     private EditExerciseFragment thisFragment = this;
 
+    private Ovelse ovelse;
+    ProgOvelseReg progOvelseReg;
+
 
     @Nullable
     @Override
@@ -71,11 +74,11 @@ public class EditExerciseFragment extends android.app.Fragment {
                 if (android.os.Build.VERSION.SDK_INT >= 21) {
                     input.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.textColor)));
                 }
-                try{
+                try {
                     Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
                     f.setAccessible(true);
                     f.set(input, R.drawable.cursor);
-                }catch (Exception e) {
+                } catch (Exception e) {
 
                 }
                 //dialog window for input
@@ -92,12 +95,11 @@ public class EditExerciseFragment extends android.app.Fragment {
                 alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Ovelse ovelse = new Ovelse(input.getText().toString());
-                        ProgOvelseReg progOvelseReg = new ProgOvelseReg(tittel, input.getText().toString());
-                        ((MainActivity)getActivity()).dbHandler.addExercise(ovelse);
-                        ((MainActivity)getActivity()).dbHandler.addProgOvelseReg(progOvelseReg);
+                        ovelse = new Ovelse(input.getText().toString());
+                        progOvelseReg = new ProgOvelseReg(tittel, input.getText().toString());
                         list.clear();
                         readItems();
+                        list.add(ovelse.getOvelseNavn());
                     }
                 });
 
@@ -113,32 +115,35 @@ public class EditExerciseFragment extends android.app.Fragment {
         saveEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
+                ((MainActivity) getActivity()).dbHandler.addExercise(ovelse);
+                ((MainActivity) getActivity()).dbHandler.addProgOvelseReg(progOvelseReg);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
             }
         });
         return view;
     }
-/*
-    public void setupListViewListener() {
-        exercise_item_ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Bundle bundle = new Bundle();
-                bundle.putString("exerciseTittel", list.get(position));
-                bundle.putString("programTittel", tittel);
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new LogWorkout(), bundle);
-            }
-        });
-    }
-*/
+
+    /*
+        public void setupListViewListener() {
+            exercise_item_ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("exerciseTittel", list.get(position));
+                    bundle.putString("programTittel", tittel);
+                    ((MainActivity)getActivity()).switchScreen(thisFragment, new LogWorkout(), bundle);
+                }
+            });
+        }
+    */
     public void readItems() {
-        ArrayList<String> ovelser = ((MainActivity)getActivity()).dbHandler.getExercisesPerProgram(tittel);
+        ArrayList<String> ovelser = ((MainActivity) getActivity()).dbHandler.getExercisesPerProgram(tittel);
         for (String s : ovelser) {
             list.add(s);
         }
     }
 
     public void deleteExercise(String text) {
-        ((MainActivity)getActivity()).dbHandler.deleteExerciseFromProgram(tittel, text);
+        ((MainActivity) getActivity()).dbHandler.deleteExerciseFromProgram(tittel, text);
     }
 }
