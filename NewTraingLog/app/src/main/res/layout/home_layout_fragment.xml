@@ -15,6 +15,7 @@
         android:background="@drawable/bottomline"
         />
 
+
     <Button
         android:id="@+id/logWorkoutButton"
         android:layout_width="225dp"
@@ -25,6 +26,7 @@
         android:text="Log your workout"
         android:background="@drawable/bottomline"
         />
+
 
     <Button
         android:id="@+id/displayLogMenuButton"
@@ -68,6 +70,37 @@
         android:text="Lb"
         android:textColor="@color/textColor"/>
 
+
+    <!--
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/createIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/createProgramButton"
+        android:layout_alignBottom="@+id/createProgramButton"
+        android:src="@drawable/round_add_black_48dp"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/LogIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/logWorkoutButton"
+        android:layout_alignBottom="@+id/logWorkoutButton"
+        android:layout_alignTop="@+id/logWorkoutButton"
+        android:layout_alignLeft="@+id/createIcon"
+        android:src="@drawable/text"
+        />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/displayIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/displayLogMenuButton"
+        android:layout_alignBottom="@id/displayLogMenuButton"
+        android:layout_alignLeft="@id/createIcon"
+        android:src="@drawable/book_open_outline"/>
+
+    -->
     <!--
     <Button
         android:id="@+id/displayDatabaseButton"

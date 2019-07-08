@@ -17,10 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.eiralv.newtrainglog.Adapter.CustomBasicListAdapapter;
 import com.eiralv.newtrainglog.Adapter.ListDeleteAdapter;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 

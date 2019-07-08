@@ -38,7 +38,6 @@ public class DisplayLogFragment extends android.app.Fragment {
         //bottom navigation
         new MyBottomNavigationView(thisFragment, view).selectedTab("Display");
 
-
         Bundle bundle = getArguments();
         this.programName = bundle.getString("programName");
         this.date = bundle.getString("dato");
