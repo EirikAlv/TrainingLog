@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
+import com.eiralv.newtrainglog.Adapter.ListDeleteAdapter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class CreateProgramFragment extends android.app.Fragment {
         //handling listview and setting custom adapter
         logLV = (ListView) view.findViewById(R.id.logLV);
         exercises = new ArrayList<>();
-        exerciseAdapter = new CustomListAdapter(getActivity(), exercises, this);
+        exerciseAdapter = new ListDeleteAdapter(getActivity(), exercises, this);
         logLV.setAdapter(exerciseAdapter);
 
         //add a dialog box when user opens fragment

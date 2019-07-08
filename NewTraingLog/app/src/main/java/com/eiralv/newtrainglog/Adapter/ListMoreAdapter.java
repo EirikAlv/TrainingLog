@@ -25,16 +25,16 @@ import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter<String> {
+public class ListMoreAdapter extends ArrayAdapter<String> {
 
-    private ImageView deleteButton;
+    private ImageView moreButton;
     private TextView customTV;
     private Context context;
     private ArrayList<String> list;
     private Fragment fragment;
 
-    public CustomListAdapter(@NonNull Context context, ArrayList<String> list, Fragment fragment) {
-        super(context, R.layout.custom_list_row, list);
+    public ListMoreAdapter(@NonNull Context context, ArrayList<String> list, Fragment fragment) {
+        super(context, R.layout.list_row_more_icon, list);
         this.context = context;
         this.list = list;
         this.fragment = fragment;
@@ -46,23 +46,23 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         View customView = convertView;
         if (customView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            customView = layoutInflater.inflate(R.layout.custom_list_row, parent, false);
+            customView = layoutInflater.inflate(R.layout.list_row_more_icon, parent, false);
         }
 
 
         final String currentText = list.get(position);
 
         customTV = customView.findViewById(R.id.customTV);
-        deleteButton = customView.findViewById(R.id.deleteButton);
+        moreButton = customView.findViewById(R.id.moreButton);
         customTV.setText(currentText);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(fragment.getClass() == ChooseProgramFragment.class) {
 
-                    final PopupMenu popupMenu = new PopupMenu(v.getContext(), deleteButton);
+                    final PopupMenu popupMenu = new PopupMenu(v.getContext(), moreButton);
                     popupMenu.getMenuInflater().inflate(R.menu.edit_prog_popup_menu, popupMenu.getMenu());
 
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -83,11 +83,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
                 }
 
-                else if (fragment.getClass() == EditExerciseFragment.class) {
-                    ((EditExerciseFragment) fragment).deleteExercise(currentText);
-                    list.remove(currentText);
-                    notifyDataSetChanged();
-                }else if (fragment.getClass() == CreateProgramFragment.class) {
+                else if (fragment.getClass() == CreateProgramFragment.class) {
                     if(!((CreateProgramFragment) fragment).getNothingAdded()) {
                         list.remove(currentText);
                         notifyDataSetChanged();

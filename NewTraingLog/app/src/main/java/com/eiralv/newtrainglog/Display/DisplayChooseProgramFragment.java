@@ -43,7 +43,7 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
         readItems();
         listAdapter = new CustomBasicListAdapapter(getActivity(), list, this);
         //listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-        //listAdapter = new CustomListAdapter(getActivity(), list, this);
+        //listAdapter = new ListDeleteAdapter(getActivity(), list, this);
         displayProgramListview.setAdapter(listAdapter);
 
         setupListViewListener();

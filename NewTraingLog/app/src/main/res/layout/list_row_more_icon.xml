@@ -23,7 +23,7 @@
         />
 
     <ImageView
-        android:id="@+id/deleteButton"
+        android:id="@+id/moreButton"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
@@ -31,6 +31,6 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:onClick="onDeleteButtonClick"
-        android:src="@drawable/round_close_black_48dp" />
+        android:src="@drawable/round_more_vert_black_48dp" />
 
 </RelativeLayout>

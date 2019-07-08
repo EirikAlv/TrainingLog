@@ -9,14 +9,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
+import com.eiralv.newtrainglog.Adapter.ListDeleteAdapter;
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.Ovelse;
@@ -33,7 +32,8 @@ public class EditExerciseFragment extends android.app.Fragment {
     private ArrayAdapter listAdapter;
     private ArrayList<String> list;
     private String tittel;
-    private Button add_exercise_button;
+    private ImageButton add_exercise_button;
+    private ImageButton saveEditButton;
     private EditExerciseFragment thisFragment = this;
 
 
@@ -45,7 +45,7 @@ public class EditExerciseFragment extends android.app.Fragment {
         //bottom navigation
         new MyBottomNavigationView(thisFragment, view);
 
-        Bundle bundle = getArguments();
+        final Bundle bundle = getArguments();
         this.tittel = bundle.getString("programTittel");
         choose_exercise_title = view.findViewById(R.id.choose_exercise_title);
         choose_exercise_title.setText(tittel);
@@ -56,10 +56,10 @@ public class EditExerciseFragment extends android.app.Fragment {
         //read file
         readItems();
 
-        listAdapter = new CustomListAdapter(getActivity(), list, this);
+        listAdapter = new ListDeleteAdapter(getActivity(), list, this);
         exercise_item_ListView.setAdapter(listAdapter);
 
-        setupListViewListener();
+        //setupListViewListener();
 
         //Add exercise button handling
         add_exercise_button = view.findViewById(R.id.add_exercise_button);
@@ -108,9 +108,17 @@ public class EditExerciseFragment extends android.app.Fragment {
 
             }
         });
+        //Save exercise button handling
+        saveEditButton = view.findViewById(R.id.saveEditButton);
+        saveEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
+            }
+        });
         return view;
     }
-
+/*
     public void setupListViewListener() {
         exercise_item_ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -122,7 +130,7 @@ public class EditExerciseFragment extends android.app.Fragment {
             }
         });
     }
-
+*/
     public void readItems() {
         ArrayList<String> ovelser = ((MainActivity)getActivity()).dbHandler.getExercisesPerProgram(tittel);
         for (String s : ovelser) {

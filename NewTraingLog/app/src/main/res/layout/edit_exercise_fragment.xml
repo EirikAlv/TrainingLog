@@ -26,14 +26,29 @@
         android:layout_above="@id/add_exercise_button"
         style="@style/customListViewStyle"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/add_exercise_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/navigation"
-        android:layout_centerHorizontal="true"
-        android:text="Add exercise"
-        android:textSize="12dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="100dp"
+        android:src="@drawable/round_add_black_48dp"
+        android:background="@android:color/transparent"
+        style="@style/editExerciseButtons"
+        />
+
+    <ImageButton
+        android:id="@+id/saveEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/navigation"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="100dp"
+        android:src="@drawable/round_save_black_48dp"
+        android:background="@android:color/transparent"
+        style="@style/editExerciseButtons"
+        />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

@@ -10,7 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.eiralv.newtrainglog.Adapter.CustomListAdapter;
+import com.eiralv.newtrainglog.Adapter.ListDeleteAdapter;
+import com.eiralv.newtrainglog.Adapter.ListMoreAdapter;
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.MyBottomNavigationView;
 import com.eiralv.newtrainglog.R;
@@ -44,7 +45,7 @@ public class ChooseProgramFragment extends android.app.Fragment {
         list = new ArrayList<>();
         readItems();
 
-        listAdapter = new CustomListAdapter(getActivity(), list, this);
+        listAdapter = new ListMoreAdapter(getActivity(), list, this);
         list_item_ListView.setAdapter(listAdapter);
 
         setupListViewListener();
