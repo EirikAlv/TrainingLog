@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eiralv.newtrainglog.Adapter.CustomBasicListAdapapter;
 import com.eiralv.newtrainglog.Adapter.ListDeleteAdapter;
 
 import java.lang.reflect.Field;
@@ -27,6 +28,7 @@ public class CreateProgramFragment extends android.app.Fragment {
 
     private ArrayList<String> exercises;
     private ArrayAdapter<String> exerciseAdapter;
+    private ArrayAdapter<String> simpleAdapter;
     private ListView logLV;
     private TextView createProgramTitle;
     private Button submitButton;
@@ -48,7 +50,8 @@ public class CreateProgramFragment extends android.app.Fragment {
         logLV = view.findViewById(R.id.logLV);
         exercises = new ArrayList<>();
         exerciseAdapter = new ListDeleteAdapter(getActivity(), exercises, this);
-        logLV.setAdapter(exerciseAdapter);
+        simpleAdapter = new CustomBasicListAdapapter(getActivity(), exercises, this);
+        //logLV.setAdapter(exerciseAdapter);
 
 
         //add a dialog box when user opens fragment
@@ -129,6 +132,7 @@ public class CreateProgramFragment extends android.app.Fragment {
 
         //checking if nothing is added to list and adds an explanation to list for user to easily understand
         if(nothingAdded) {
+            logLV.setAdapter(simpleAdapter);
             exercises.add("Add all the exercises for you custom program to this list");
             exercises.add(".....");
             exercises.add(".....");
@@ -156,6 +160,7 @@ public class CreateProgramFragment extends android.app.Fragment {
                 String exercise = setET.getText().toString();
                 if (nothingAdded) {
                     exercises.clear();
+                    logLV.setAdapter(exerciseAdapter);
                     nothingAdded = false;
                     logLV.setClickable(true);
                     logLV.setEnabled(true);

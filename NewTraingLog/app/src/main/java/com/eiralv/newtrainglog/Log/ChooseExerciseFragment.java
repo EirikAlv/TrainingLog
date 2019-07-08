@@ -41,7 +41,7 @@ public class ChooseExerciseFragment extends android.app.Fragment {
         list_item_title = view.findViewById(R.id.list_item_title);
         list_item_title.setText(tittel);
 
-        //handling listview, and setting adapter
+        //handling listView, and setting adapter
         list_item_ListView = view.findViewById(R.id.list_item_ListView);
         list = new ArrayList<>();
         readItems();
