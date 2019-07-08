@@ -3,13 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <TextView
+        android:id="@+id/createProgramTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        style="@style/customTextViewStyle"/>
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/createProgramTitle"
         android:onClick="onExerciseButtonClick"
         android:text="Add" />
 
@@ -21,7 +29,7 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/createProgramTitle"
         android:layout_toLeftOf="@+id/submitButton"
         android:layout_toStartOf="@+id/submitButton"
         android:ems="10"

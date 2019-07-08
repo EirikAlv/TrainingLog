@@ -28,7 +28,7 @@ public class CreateProgramFragment extends android.app.Fragment {
     private ArrayList<String> exercises;
     private ArrayAdapter<String> exerciseAdapter;
     private ListView logLV;
-
+    private TextView createProgramTitle;
     private Button submitButton;
     private EditText setET;
     private Button saveButton;
@@ -40,11 +40,16 @@ public class CreateProgramFragment extends android.app.Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_program_fragment, container, false);
 
+        //title handling
+        createProgramTitle = view.findViewById(R.id.createProgramTitle);
+        createProgramTitle.setText(programName);
+
         //handling listview and setting custom adapter
-        logLV = (ListView) view.findViewById(R.id.logLV);
+        logLV = view.findViewById(R.id.logLV);
         exercises = new ArrayList<>();
         exerciseAdapter = new ListDeleteAdapter(getActivity(), exercises, this);
         logLV.setAdapter(exerciseAdapter);
+
 
         //add a dialog box when user opens fragment
         //create a edittex for the dialogbox
@@ -74,7 +79,7 @@ public class CreateProgramFragment extends android.app.Fragment {
             @Override
             public void onShow(DialogInterface dialogInterface) {
 
-                final Button saveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                final Button saveButton = (dialog).getButton(AlertDialog.BUTTON_POSITIVE);
                 saveButton.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -92,6 +97,7 @@ public class CreateProgramFragment extends android.app.Fragment {
                                 Toast.makeText(getActivity(), "program allready exists", Toast.LENGTH_LONG).show();
                             }else {
                                 programName = input.getText().toString();
+                                createProgramTitle.setText(programName);
                                 dialog.dismiss();
                             }
                         }else {
@@ -121,7 +127,7 @@ public class CreateProgramFragment extends android.app.Fragment {
         });
         dialog.show();
 
-        //checking if nothing is added to list and adds an explenation to list for user to easily understand
+        //checking if nothing is added to list and adds an explanation to list for user to easily understand
         if(nothingAdded) {
             exercises.add("Add all the exercises for you custom program to this list");
             exercises.add(".....");
@@ -171,7 +177,7 @@ public class CreateProgramFragment extends android.app.Fragment {
         });
 
         //"addprogram" button handling
-        saveButton = (Button) view.findViewById(R.id.saveButton);
+        saveButton = view.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
