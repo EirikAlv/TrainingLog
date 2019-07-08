@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="100dp"
         android:src="@drawable/round_add_black_48dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/circle_background"
         style="@style/editExerciseButtons"
         />
 
@@ -46,7 +46,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="100dp"
         android:src="@drawable/round_save_black_48dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/circle_background"
         style="@style/editExerciseButtons"
         />
 
