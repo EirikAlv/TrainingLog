@@ -33,7 +33,7 @@ public class ChooseProgramFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.choose_program_fragment, container, false);
 
         //bottom navigation
-        new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view).selectedTab("Log");
 
         //set title of fragment
         list_item_title = view.findViewById(R.id.list_item_title);

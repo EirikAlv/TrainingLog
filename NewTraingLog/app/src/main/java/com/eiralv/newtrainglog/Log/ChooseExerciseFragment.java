@@ -33,7 +33,7 @@ public class ChooseExerciseFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_exercise_fragment, container, false);
 
-        new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view).selectedTab("Log");
 
         //set title of fragment
         Bundle bundle = getArguments();

@@ -36,7 +36,7 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.display_choose_program_fragment, container, false);
 
         //bottom navigation
-        new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view).selectedTab("Display");
 
         displayProgramListview = view.findViewById(R.id.displayProgramListview);
         list = new ArrayList<>();

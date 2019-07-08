@@ -32,8 +32,8 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation_items"
         style="@style/bottomNavStyle"
-        app:itemIconTint="@color/bottomNavTint"
-        app:itemTextColor="@color/bottomTextColor"
+        app:itemIconTint="@color/bottom_nav_color_selector"
+        app:itemTextColor="@color/bottom_nav_color_selector"
         />
 
 

@@ -43,7 +43,7 @@ public class EditExerciseFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.edit_exercise_fragment, container, false);
 
         //bottom navigation
-        new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view).selectedTab("Log");
 
         final Bundle bundle = getArguments();
         this.tittel = bundle.getString("programTittel");

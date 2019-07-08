@@ -48,7 +48,7 @@ public class LogWorkout extends Fragment {
         final View view = inflater.inflate(R.layout.log_workout_fragment, container, false);
 
         //bottom navigation
-        new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view).selectedTab("Log");
 
         Bundle bundle = getArguments();
         this.exerciseTittel = bundle.getString("exerciseTittel");

@@ -36,7 +36,7 @@ public class DisplayLogFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.display_log_fragment, container, false);
 
         //bottom navigation
-        new MyBottomNavigationView(thisFragment, view);
+        new MyBottomNavigationView(thisFragment, view).selectedTab("Display");
 
 
         Bundle bundle = getArguments();
