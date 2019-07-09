@@ -108,7 +108,7 @@ public class DisplayLogFragment extends android.app.Fragment {
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("hay");
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new CalendarFragment(), null);
             }
         });
 
