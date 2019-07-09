@@ -1,5 +1,6 @@
 package com.eiralv.newtrainglog.Display;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,7 +22,11 @@ public class CalendarFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
 
         MCalendarView calendarView = view.findViewById(R.id.calendar);
+        calendarView.markDate(new DateData(2019, 07, 03).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE)));
 
+        calendarView.setMarkedStyle(MarkStyle.DOT, Color.GREEN);
+
+        calendarView.markDate(2019, 07, 19);
 
         return view;
     }

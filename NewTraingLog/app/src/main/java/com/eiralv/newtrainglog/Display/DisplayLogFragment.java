@@ -1,5 +1,6 @@
 package com.eiralv.newtrainglog.Display;
 
+import android.content.Context;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,13 +8,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.eiralv.newtrainglog.Adapter.DisplayLogRowAdapter;
@@ -30,6 +34,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sun.bob.mcalendarview.MCalendarView;
+
 import static java.time.LocalDate.parse;
 
 public class DisplayLogFragment extends android.app.Fragment {
@@ -40,16 +46,17 @@ public class DisplayLogFragment extends android.app.Fragment {
     private String programName;
     private String date;
     private DisplayLogFragment thisFragment = this;
+    View cView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.display_log_fragment, container, false);
+        cView = inflater.inflate(R.layout.display_log_fragment, container, false);
 
         //bottom navigation
-        new MyBottomNavigationView(thisFragment, view).selectedTab("Display");
+        new MyBottomNavigationView(thisFragment, cView).selectedTab("Display");
 
         Bundle bundle = getArguments();
         this.programName = bundle.getString("programName");
@@ -63,10 +70,10 @@ public class DisplayLogFragment extends android.app.Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        TextView dateLogged = view.findViewById(R.id.dateLogged);
+        TextView dateLogged = cView.findViewById(R.id.dateLogged);
         dateLogged.setText(dateTitle);
 
-        logListView = view.findViewById(R.id.logListView);
+        logListView = cView.findViewById(R.id.logListView);
 
         list = ((MainActivity) getActivity()).dbHandler.getExercisePerProgramDate(programName, date);
 
@@ -74,8 +81,8 @@ public class DisplayLogFragment extends android.app.Fragment {
         logListView.setAdapter(listAdapter);
 
         //arrow button handling
-        ImageButton leftArrow = view.findViewById(R.id.leftArrow);
-        ImageButton rightArrow = view.findViewById(R.id.rightArrow);
+        ImageButton leftArrow = cView.findViewById(R.id.leftArrow);
+        ImageButton rightArrow = cView.findViewById(R.id.rightArrow);
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,15 +111,15 @@ public class DisplayLogFragment extends android.app.Fragment {
         });
 
         //calendar button handling
-        ImageButton calendarButton = view.findViewById(R.id.calendarButton);
+        ImageButton calendarButton = cView.findViewById(R.id.calendarButton);
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).switchScreen(thisFragment, new CalendarFragment(), null);
+                ((MainActivity) getActivity()).popupFragment(new CalendarFragment());
             }
         });
 
-        return view;
+        return cView;
     }
 
 

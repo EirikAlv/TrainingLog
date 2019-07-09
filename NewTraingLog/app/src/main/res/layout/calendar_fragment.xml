@@ -3,13 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    android:elevation="5dp"
+    android:background="@drawable/blurred_edges"
+    android:padding="50dp"
+
+    >
 
     <sun.bob.mcalendarview.MCalendarView
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:id="@+id/calendar"
-        tools:context=".CalendarFragment"
+        tools:context=".DisplayLogFragment"
+        android:background="@drawable/shadow_view"
         />
-
+    <!--
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="yes"
+            android:textSize="20sp"
+            />
+            -->
 </RelativeLayout>
