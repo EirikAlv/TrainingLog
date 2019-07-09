@@ -5,13 +5,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
 import com.eiralv.newtrainglog.Log.Logging;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+
+import static java.time.LocalDate.parse;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
@@ -231,6 +239,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return list;
     }
+
+    public String mostResentLog(String program)  {
+        ArrayList<String> strings = datesToList(program);
+        ArrayList<LocalDate> datoer = new ArrayList<>();
+        for (String s : strings) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                datoer.add(parse(s));
+            }
+        }
+        return Collections.max(datoer).toString();
+    }
+
     public ArrayList<String> getExercisePerProgramDate(String programName, String dato) {
         String query2 = "select distinct OvelseNavn from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
                 COLUMN_DATO + "= \"" + dato + "\"";

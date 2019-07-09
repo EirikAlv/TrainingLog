@@ -36,7 +36,7 @@ public class HomeFragment extends android.app.Fragment {
 
         hideKeyboardFrom(getActivity(), view);
         //handle create program button
-        createProgramButton = (Button) view.findViewById(R.id.createProgramButton);
+        createProgramButton = view.findViewById(R.id.createProgramButton);
         createProgramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,10 +46,8 @@ public class HomeFragment extends android.app.Fragment {
             }
         });
 
-
-
         //handle log button
-        logWorkoutButton = (Button) view.findViewById(R.id.logWorkoutButton);
+        logWorkoutButton = view.findViewById(R.id.logWorkoutButton);
         logWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,9 +55,8 @@ public class HomeFragment extends android.app.Fragment {
             }
         });
 
-
         //handle display button
-        displayLogMenuButton = (Button) view.findViewById(R.id.displayLogMenuButton);
+        displayLogMenuButton = view.findViewById(R.id.displayLogMenuButton);
         displayLogMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

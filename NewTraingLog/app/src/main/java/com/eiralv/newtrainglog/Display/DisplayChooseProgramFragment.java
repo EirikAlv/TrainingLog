@@ -42,8 +42,6 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
         list = new ArrayList<>();
         readItems();
         listAdapter = new CustomBasicListAdapapter(getActivity(), list, this);
-        //listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-        //listAdapter = new ListDeleteAdapter(getActivity(), list, this);
         displayProgramListview.setAdapter(listAdapter);
 
         setupListViewListener();
@@ -58,15 +56,17 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("programName", list.get(position));
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayDatesFragment(), bundle);
+                bundle.putString("dato", ((MainActivity) getActivity()).dbHandler.mostResentLog(list.get(position)));
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
             }
         });
     }
 
     private void readItems() {
-        ArrayList<String> programer = ((MainActivity)getActivity()).dbHandler.programToList();
+        ArrayList<String> programer = ((MainActivity) getActivity()).dbHandler.programToList();
         for (String s : programer) {
             list.add(s);
         }
     }
+
 }

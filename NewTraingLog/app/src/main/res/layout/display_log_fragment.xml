@@ -4,6 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/dateLogged"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        />
     <ListView
         android:id="@+id/logListView"
         android:layout_width="match_parent"
@@ -11,7 +18,8 @@
         android:layout_centerInParent="true"
         android:divider="@null"
         android:listSelector="@android:color/transparent"
-        android:layout_above="@+id/navigation"/>
+        android:layout_above="@+id/navigation"
+        android:layout_below="@+id/dateLogged"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
