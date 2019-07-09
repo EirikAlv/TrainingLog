@@ -103,6 +103,15 @@ public class DisplayLogFragment extends android.app.Fragment {
             }
         });
 
+        //calendar button handling
+        ImageButton calendarButton = view.findViewById(R.id.calendarButton);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("hay");
+            }
+        });
+
         return view;
     }
 

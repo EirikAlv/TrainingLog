@@ -37,8 +37,15 @@
         android:layout_centerInParent="true"
         android:divider="@null"
         android:listSelector="@android:color/transparent"
-        android:layout_above="@+id/navigation"
+        android:layout_above="@+id/calendarButton"
         android:layout_below="@+id/dateLogged"/>
+    <ImageButton
+        android:id="@+id/calendarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navigation"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/calendar"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
