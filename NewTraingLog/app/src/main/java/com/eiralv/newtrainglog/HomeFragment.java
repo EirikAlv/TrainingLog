@@ -40,7 +40,7 @@ public class HomeFragment extends android.app.Fragment {
         createProgramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new CreateProgramFragment() , null);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new CreateProgramFragment(), null);
 
 
             }
@@ -51,7 +51,7 @@ public class HomeFragment extends android.app.Fragment {
         logWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseProgramFragment(), null);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new ChooseProgramFragment(), null);
             }
         });
 
@@ -60,7 +60,7 @@ public class HomeFragment extends android.app.Fragment {
         displayLogMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayChooseProgramFragment(), null);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayChooseProgramFragment(), null);
             }
         });
 
@@ -79,21 +79,21 @@ public class HomeFragment extends android.app.Fragment {
         mesure_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(mesure_switch.isChecked()) {
-                    ((MainActivity)getActivity()).dbHandler.setMesure(lb);
-                    ((MainActivity)getActivity()).setMesurement(lb);
-                }else {
-                    ((MainActivity)getActivity()).dbHandler.setMesure(kg);
-                    ((MainActivity)getActivity()).setMesurement(kg);
+                if (mesure_switch.isChecked()) {
+                    ((MainActivity) getActivity()).dbHandler.setMesure(lb);
+                    ((MainActivity) getActivity()).setMesurement(lb);
+                } else {
+                    ((MainActivity) getActivity()).dbHandler.setMesure(kg);
+                    ((MainActivity) getActivity()).setMesurement(kg);
                 }
             }
         });
 
         //set switch if either kg og lb according to what mainactivity mesure says
-        String mesurement = ((MainActivity)getActivity()).getMesurement();
-        if(mesurement.equals(kg)) {
+        String mesurement = ((MainActivity) getActivity()).getMesurement();
+        if (mesurement.equals(kg)) {
             mesure_switch.setChecked(false);
-        }else if (mesurement.equals(lb)) {
+        } else if (mesurement.equals(lb)) {
             mesure_switch.setChecked(true);
         }
 

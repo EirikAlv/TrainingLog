@@ -56,7 +56,7 @@ public class DisplayDatesFragment extends android.app.Fragment  {
                 Bundle bundle = new Bundle();
                 bundle.putString("dato", list.get(position));
                 bundle.putString("programName", programName);
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
             }
         });
     }

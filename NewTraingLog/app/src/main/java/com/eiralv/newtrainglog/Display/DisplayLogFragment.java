@@ -68,7 +68,7 @@ public class DisplayLogFragment extends android.app.Fragment {
 
         logListView = view.findViewById(R.id.logListView);
 
-        list = ((MainActivity)getActivity()).dbHandler.getExercisePerProgramDate(programName, date);
+        list = ((MainActivity) getActivity()).dbHandler.getExercisePerProgramDate(programName, date);
 
         listAdapter = new DisplayLogRowAdapter(this.getActivity(), list, date);
         logListView.setAdapter(listAdapter);
@@ -80,12 +80,25 @@ public class DisplayLogFragment extends android.app.Fragment {
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String prior = ((MainActivity)getActivity()).dbHandler.getPriorLog(programName, date);
+                String prior = ((MainActivity) getActivity()).dbHandler.getPriorLog(programName, date);
                 if (prior != null) {
                     Bundle bundle = new Bundle();
                     bundle.putString("dato", prior);
                     bundle.putString("programName", programName);
-                    ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
+                    ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
+                }
+            }
+        });
+
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String next = ((MainActivity) getActivity()).dbHandler.getNextLog(programName, date);
+                if (next != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("dato", next);
+                    bundle.putString("programName", programName);
+                    ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
                 }
             }
         });

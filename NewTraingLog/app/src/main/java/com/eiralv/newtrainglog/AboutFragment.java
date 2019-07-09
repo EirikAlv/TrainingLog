@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class AboutFragment extends android.app.Fragment  {
+public class AboutFragment extends android.app.Fragment {
 
     TextView showDatabaseTV;
 
@@ -16,7 +16,7 @@ public class AboutFragment extends android.app.Fragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_fragment, container, false);
 
-        showDatabaseTV = (TextView)view.findViewById(R.id.showDatabaseTV);
+        showDatabaseTV = view.findViewById(R.id.showDatabaseTV);
 
         return view;
     }

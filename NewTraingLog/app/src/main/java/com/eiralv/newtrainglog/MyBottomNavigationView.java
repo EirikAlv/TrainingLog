@@ -50,6 +50,7 @@ public class MyBottomNavigationView {
                 break;
         }
     }
+
     public void resetSelected() {
         bottomNavigationView.getMenu().findItem(R.id.display_item).setChecked(false);
     }

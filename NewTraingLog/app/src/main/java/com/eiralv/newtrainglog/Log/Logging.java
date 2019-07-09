@@ -11,7 +11,9 @@ public class Logging {
     private String reps;
     private String dato;
     private String mesure;
-    public Logging(){}
+
+    public Logging() {
+    }
 
     public Logging(String programNavn, String ovelseNavn, String vekt, String reps, String mesure) {
         this.programNavn = programNavn;

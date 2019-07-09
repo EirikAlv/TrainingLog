@@ -53,12 +53,14 @@ public class ChooseExerciseFragment extends android.app.Fragment {
 
         return view;
     }
+
     public void readItems() {
-        ArrayList<String> ovelser = ((MainActivity)getActivity()).dbHandler.getExercisesPerProgram(tittel);
+        ArrayList<String> ovelser = ((MainActivity) getActivity()).dbHandler.getExercisesPerProgram(tittel);
         for (String s : ovelser) {
             list.add(s);
         }
     }
+
     public void setupListViewListener() {
         list_item_ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,7 +68,7 @@ public class ChooseExerciseFragment extends android.app.Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("exerciseTittel", list.get(position));
                 bundle.putString("programTittel", tittel);
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new LogWorkout(), bundle);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new LogWorkout(), bundle);
             }
         });
     }

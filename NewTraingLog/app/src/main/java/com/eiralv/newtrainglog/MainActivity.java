@@ -21,11 +21,12 @@ import java.io.PrintWriter;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     public MyDBHandler dbHandler;
     private String mesurement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
 
         dbHandler = new MyDBHandler(this, null, null, 1);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             HomeFragment homeFragment = new HomeFragment();

@@ -5,7 +5,8 @@ public class Ovelse {
     private int id;
     private String ovelseNavn;
 
-    public Ovelse(){}
+    public Ovelse() {
+    }
 
     public Ovelse(String ovelseNavn) {
         this.ovelseNavn = ovelseNavn;

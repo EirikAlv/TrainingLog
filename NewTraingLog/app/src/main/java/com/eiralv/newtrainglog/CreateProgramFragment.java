@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.eiralv.newtrainglog.Adapter.CustomBasicListAdapapter;
 import com.eiralv.newtrainglog.Adapter.ListDeleteAdapter;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -60,11 +62,11 @@ public class CreateProgramFragment extends android.app.Fragment {
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             input.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.textColor)));
         }
-        try{
+        try {
             Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
             f.setAccessible(true);
             f.set(input, R.drawable.cursor);
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -85,23 +87,23 @@ public class CreateProgramFragment extends android.app.Fragment {
 
                     @Override
                     public void onClick(View view) {
-                        if(!input.getText().toString().equals("")) {
-                            ArrayList<String> programList = ((MainActivity)getActivity()).dbHandler.programToList();
+                        if (!input.getText().toString().equals("")) {
+                            ArrayList<String> programList = ((MainActivity) getActivity()).dbHandler.programToList();
                             Boolean funnet = false;
                             for (String s : programList) {
-                                if(s.equals(input.getText().toString())) {
+                                if (s.equals(input.getText().toString())) {
                                     funnet = true;
                                     break;
                                 }
                             }
-                            if(funnet) {
+                            if (funnet) {
                                 Toast.makeText(getActivity(), "program allready exists", Toast.LENGTH_LONG).show();
-                            }else {
+                            } else {
                                 programName = input.getText().toString();
                                 createProgramTitle.setText(programName);
                                 dialog.dismiss();
                             }
-                        }else {
+                        } else {
                             Toast.makeText(getActivity(), "cannot save empty name", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -117,7 +119,7 @@ public class CreateProgramFragment extends android.app.Fragment {
                 input.setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
                             saveButton.callOnClick();
                             return true;
                         }
@@ -129,7 +131,7 @@ public class CreateProgramFragment extends android.app.Fragment {
         dialog.show();
 
         //checking if nothing is added to list and adds an explanation to list for user to easily understand
-        if(nothingAdded) {
+        if (nothingAdded) {
             logLV.setAdapter(simpleAdapter);
             exercises.add("Add all the exercises for you custom program to this list");
             exercises.add(".....");
@@ -144,7 +146,7 @@ public class CreateProgramFragment extends android.app.Fragment {
         setET.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
                     submitButton.callOnClick();
                     return true;
                 }
@@ -166,13 +168,13 @@ public class CreateProgramFragment extends android.app.Fragment {
                 }
                 boolean allerede = false;
                 for (String s : exercises) {
-                    if(s.equals(exercise)) {
+                    if (s.equals(exercise)) {
                         allerede = true;
                         Toast.makeText(getActivity(), "exercise already added to list", Toast.LENGTH_LONG).show();
                         break;
                     }
                 }
-                if(!allerede) {
+                if (!allerede) {
                     exerciseAdapter.add(exercise);
                 }
                 setET.setText("");
@@ -188,12 +190,12 @@ public class CreateProgramFragment extends android.app.Fragment {
                     Toast.makeText(getActivity(), "Nothing added to the list", Toast.LENGTH_LONG).show();
                 } else {
                     Program program = new Program(programName);
-                    ((MainActivity)getActivity()).dbHandler.addProgram(program);
+                    ((MainActivity) getActivity()).dbHandler.addProgram(program);
                     for (String exercise : exercises) {
                         Ovelse ovelse = new Ovelse(exercise);
                         ProgOvelseReg progOvelseReg = new ProgOvelseReg(programName, exercise);
-                        ((MainActivity)getActivity()).dbHandler.addExercise(ovelse);
-                        ((MainActivity)getActivity()).dbHandler.addProgOvelseReg(progOvelseReg);
+                        ((MainActivity) getActivity()).dbHandler.addExercise(ovelse);
+                        ((MainActivity) getActivity()).dbHandler.addProgOvelseReg(progOvelseReg);
                     }
                     exercises.clear();
                     getActivity().onBackPressed();

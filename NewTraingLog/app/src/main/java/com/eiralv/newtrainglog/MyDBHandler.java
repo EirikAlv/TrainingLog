@@ -270,7 +270,40 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 index = dates.indexOf(currentDate);
             }
             if (index != 0) {
-                returnString = dates.get(index -1).toString();
+                returnString = dates.get(index - 1).toString();
+            }
+        }
+        return returnString;
+    }
+
+    /**
+     * @param programName
+     * @param date
+     * @return String representing the date that was logged next after the date that is passed in, if there is no
+     * next log it will return null
+     */
+    public String getNextLog(String programName, String date) {
+        ArrayList<String> list = datesToList(programName);
+        String returnString = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate thisDate = parse(date);
+            ArrayList<LocalDate> dates = new ArrayList<>();
+            int index = 0;
+            if (list.size() > 1) {
+                for (String s : list) {
+                    dates.add(parse(s));
+                }
+                Collections.sort(dates);
+                LocalDate currentDate = null;
+                for (LocalDate localDate : dates) {
+                    if (localDate.isEqual(thisDate)) {
+                        currentDate = localDate;
+                    }
+                }
+                index = dates.indexOf(currentDate);
+            }
+            if (index != dates.size() - 1 && dates.size() != 0) {
+                returnString = dates.get(index + 1).toString();
             }
         }
         return returnString;
@@ -443,6 +476,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         return returnList;
     }
+
+
 }
 
 
