@@ -65,7 +65,9 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
     private void readItems() {
         ArrayList<String> programer = ((MainActivity) getActivity()).dbHandler.programToList();
         for (String s : programer) {
-            list.add(s);
+            if (!((MainActivity) getActivity()).dbHandler.datesToList(s).isEmpty()){
+                list.add(s);
+            }
         }
     }
 

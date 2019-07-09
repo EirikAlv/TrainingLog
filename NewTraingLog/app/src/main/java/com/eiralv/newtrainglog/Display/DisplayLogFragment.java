@@ -1,5 +1,6 @@
 package com.eiralv.newtrainglog.Display;
 
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -70,6 +72,23 @@ public class DisplayLogFragment extends android.app.Fragment {
 
         listAdapter = new DisplayLogRowAdapter(this.getActivity(), list, date);
         logListView.setAdapter(listAdapter);
+
+        //arrow button handling
+        ImageButton leftArrow = view.findViewById(R.id.leftArrow);
+        ImageButton rightArrow = view.findViewById(R.id.rightArrow);
+
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String prior = ((MainActivity)getActivity()).dbHandler.getPriorLog(programName, date);
+                if (prior != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("dato", prior);
+                    bundle.putString("programName", programName);
+                    ((MainActivity)getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
+                }
+            }
+        });
 
         return view;
     }

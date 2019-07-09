@@ -28,7 +28,6 @@
 
     <ImageButton
         android:id="@+id/add_exercise_button"
-
         android:layout_above="@+id/navigation"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="100dp"

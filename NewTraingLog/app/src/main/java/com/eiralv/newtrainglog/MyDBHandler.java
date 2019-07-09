@@ -81,7 +81,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MESUREMENT, "kg");
         long svar = db.insert(TABLE_MESURE, null, values);
-        if(svar == -1) {
+        if (svar == -1) {
             Toast.makeText(this.context, "something went wrong when saving mesure to db", Toast.LENGTH_LONG).show();
         }
     }
@@ -99,11 +99,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public void setMesure(String mesure) {
         SQLiteDatabase db = getWritableDatabase();
-        String query = "update " + TABLE_MESURE + " set " + COLUMN_MESUREMENT + "= \'" + mesure + "\'"+ " where " +
+        String query = "update " + TABLE_MESURE + " set " + COLUMN_MESUREMENT + "= \'" + mesure + "\'" + " where " +
                 COLUMN_ID + "=" + "1";
         db.execSQL(query);
         db.close();
     }
+
     public String getMesure() {
         SQLiteDatabase db = getWritableDatabase();
         String dbString = "";
@@ -125,7 +126,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String query = "select * from " + TABLE_PROGRAM;
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
-            if(program.getProgramNavn().equals(c.getString(1))) {
+            if (program.getProgramNavn().equals(c.getString(1))) {
                 db.close();
                 c.close();
                 return;
@@ -144,7 +145,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String query = "select * from " + TABLE_OVELSE;
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
-            if(ovelse.getOvelseNavn().equals(c.getString(1))) {
+            if (ovelse.getOvelseNavn().equals(c.getString(1))) {
                 db.close();
                 c.close();
                 return;
@@ -160,10 +161,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         db.close();
     }
+
     public void addProgOvelseReg(ProgOvelseReg progOvelseReg) {
         ArrayList<String> ovelser = privateGetExercisesPerProgram(progOvelseReg.getProgramNavn());
         for (String item : ovelser) {
-            if(item.equals(progOvelseReg.getOvelseNavn())) {
+            if (item.equals(progOvelseReg.getOvelseNavn())) {
                 Toast.makeText(this.context, "This exercise is already registered to this program", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -179,6 +181,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         db.close();
     }
+
     public void saveToLogging(Logging logging) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_PROGRAM, logging.getProgramNavn());
@@ -203,7 +206,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             dbString += c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " " +
-                    c.getString(4) + " " +c.getString(5) + "\n";
+                    c.getString(4) + " " + c.getString(5) + "\n";
         }
         c.close();
         db.close();
@@ -230,7 +233,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public ArrayList<String> datesToList(String programName) {
         ArrayList<String> list = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String query = "select " + COLUMN_DATO + " from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" +" group by " + COLUMN_DATO;
+        String query = "select " + COLUMN_DATO + " from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " group by " + COLUMN_DATO;
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             list.add(c.getString(0));
@@ -240,7 +243,44 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return list;
     }
 
-    public String mostResentLog(String program)  {
+    /**
+     * @param programName
+     * @param date
+     * @return String representing the date that was logged just prior to the date that is passed in, if there is no
+     * prior log it will return null
+     */
+    public String getPriorLog(String programName, String date) {
+        ArrayList<String> list = datesToList(programName);
+        String returnString = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate thisDate = parse(date);
+            ArrayList<LocalDate> dates = new ArrayList<>();
+            int index = 0;
+            if (list.size() > 1 && !list.get(0).equals(date)) {
+                for (String s : list) {
+                    dates.add(parse(s));
+                }
+                Collections.sort(dates);
+                LocalDate currentDate = null;
+                for (LocalDate localDate : dates) {
+                    if (localDate.isEqual(thisDate)) {
+                        currentDate = localDate;
+                    }
+                }
+                index = dates.indexOf(currentDate);
+            }
+            if (index != 0) {
+                returnString = dates.get(index -1).toString();
+            }
+        }
+        return returnString;
+    }
+
+    /**
+     * @param program
+     * @return String representing the most resent date that the program that is passed in has logged
+     */
+    public String mostResentLog(String program) {
         ArrayList<String> strings = datesToList(program);
         ArrayList<LocalDate> datoer = new ArrayList<>();
         for (String s : strings) {
@@ -257,7 +297,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         ArrayList<String> ovelser = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(query2, null);
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             ovelser.add(cursor.getString(0));
         }
         cursor.close();
@@ -325,14 +365,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void deleteExerciseFromProgram(String programName, String exerciseName) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("delete from " + TABLE_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
-                    COLUMN_OVELSE + "= \"" + exerciseName + "\"");
+                COLUMN_OVELSE + "= \"" + exerciseName + "\"");
         db.close();
     }
 
     //METHOD TO DELETE A LOG SPECIFIED LOG LINE
     public void deleteLogLine(String programName, String exerciseTitle, ListAdapterItem item) {
         String line = item.getWeight() + item.getReps();
-        line = line.replaceAll("\\s+|\\D","");
+        line = line.replaceAll("\\s+|\\D", "");
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             dato = LocalDate.now().toString();
         }

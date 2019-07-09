@@ -4,13 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/leftArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_back_ios_black_48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
     <TextView
         android:id="@+id/dateLogged"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        android:textSize="25sp"
+        android:layout_alignBottom="@id/leftArrow"/>
+
+    <ImageButton
+        android:id="@+id/rightArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_forward_ios_black_48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         />
+
     <ListView
         android:id="@+id/logListView"
         android:layout_width="match_parent"
@@ -29,7 +48,6 @@
         app:menu="@menu/bottom_navigation_items"
         style="@style/bottomNavStyle"
         app:itemIconTint="@color/bottomNavTint"
-        app:itemTextColor="@color/bottomTextColor"
-        />
+        app:itemTextColor="@color/bottomTextColor"/>
 
 </RelativeLayout>
