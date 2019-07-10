@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:elevation="5dp"
     android:background="@drawable/blurred_edges"
-    android:padding="50dp"
-
-    >
+    android:padding="50dp">
 
     <sun.bob.mcalendarview.MCalendarView
         android:layout_width="400dp"

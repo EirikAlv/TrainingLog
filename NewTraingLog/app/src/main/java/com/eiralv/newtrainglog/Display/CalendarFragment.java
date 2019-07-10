@@ -19,8 +19,13 @@ import sun.bob.mcalendarview.listeners.OnDateClickListener;
 import sun.bob.mcalendarview.listeners.OnMonthChangeListener;
 import sun.bob.mcalendarview.MCalendarView;
 import sun.bob.mcalendarview.vo.DateData;
+import sun.bob.mcalendarview.vo.MarkedDates;
 
 public class CalendarFragment extends android.app.Fragment {
+
+    private CalendarFragment thisFragment = this;
+    private String programName;
+    private MCalendarView calendarView;
 
     @Nullable
     @Override
@@ -28,10 +33,10 @@ public class CalendarFragment extends android.app.Fragment {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
 
         Bundle bundle = getArguments();
-        String programName = bundle.getString("programName");
+        programName = bundle.getString("programName");
         ArrayList<LocalDate> dates = ((MainActivity) getActivity()).dbHandler.getLocalDateToList(programName);
 
-        MCalendarView calendarView = view.findViewById(R.id.calendar);
+        calendarView = view.findViewById(R.id.calendar);
 
         for (LocalDate date : dates) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -40,6 +45,22 @@ public class CalendarFragment extends android.app.Fragment {
             }
         }
 
+        calendarView.setOnDateClickListener(new OnDateClickListener() {
+            @Override
+            public void onDateClick(View view, DateData date) {
+                String month = date.getMonth() < 9 ? "0" + date.getMonth() : date.getMonth() + "";
+                String day = date.getDay() < 9 ? "0" + date.getDay() : date.getDay() + "";
+                String dato = date.getYear() + "-" + month + "-" + day;
+                Bundle bundle = new Bundle();
+                bundle.putString("dato", dato);
+                bundle.putString("programName", programName);
+                MarkedDates md = calendarView.getMarkedDates();
+                ArrayList<DateData> liste = md.getAll();
+                if(liste.indexOf(date) > 0) {
+                    ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
+                }
+            }
+        });
 
         return view;
     }

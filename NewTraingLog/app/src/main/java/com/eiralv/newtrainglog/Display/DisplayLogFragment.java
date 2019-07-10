@@ -49,6 +49,7 @@ public class DisplayLogFragment extends android.app.Fragment {
     View cView;
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
@@ -117,7 +118,8 @@ public class DisplayLogFragment extends android.app.Fragment {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("programName", programName);
-                ((MainActivity) getActivity()).popupFragment(new CalendarFragment(), bundle);
+                //((MainActivity) getActivity()).popupFragment(new CalendarFragment(), bundle);
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new CalendarFragment(), bundle);
             }
         });
 
