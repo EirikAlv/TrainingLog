@@ -115,9 +115,11 @@ public class EditExerciseFragment extends android.app.Fragment {
         saveEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).dbHandler.addExercise(ovelse);
-                ((MainActivity) getActivity()).dbHandler.addProgOvelseReg(progOvelseReg);
-                ((MainActivity) getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
+                if (ovelse != null) {
+                    ((MainActivity) getActivity()).dbHandler.addExercise(ovelse);
+                    ((MainActivity) getActivity()).dbHandler.addProgOvelseReg(progOvelseReg);
+                }
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new ChooseProgramFragment(), bundle);
             }
         });
         return view;

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/add_exercise_button"
         android:gravity="center"
         style="@style/customTextViewStyle"
         />
@@ -23,27 +24,22 @@
         android:layout_centerHorizontal="true"
         android:padding="15dp"
         android:paddingBottom="0dp"
-        android:layout_above="@id/add_exercise_button"
+        android:layout_above="@id/navigation"
         style="@style/customListViewStyle"/>
 
     <ImageButton
         android:id="@+id/add_exercise_button"
-        android:layout_above="@+id/navigation"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="100dp"
+        android:layout_above="@+id/exercise_item_ListView"
+        android:layout_toLeftOf="@id/saveEditButton"
         android:src="@drawable/round_add_black_48dp"
-        android:background="@drawable/circle_background"
         style="@style/editExerciseButtons"
         />
 
     <ImageButton
         android:id="@+id/saveEditButton"
-
-        android:layout_above="@+id/navigation"
+        android:layout_above="@+id/exercise_item_ListView"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="100dp"
         android:src="@drawable/content_save"
-        android:background="@drawable/circle_background"
         style="@style/editExerciseButtons"
         />
 
