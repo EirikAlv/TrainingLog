@@ -243,6 +243,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<LocalDate> getLocalDateToList(String programName){
+        ArrayList<String> list = datesToList(programName);
+        ArrayList<LocalDate> returnList = new ArrayList<>();
+        for (String s : list) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                returnList.add(parse(s));
+            }
+        }
+        return returnList;
+    }
+
     /**
      * @param programName
      * @param date

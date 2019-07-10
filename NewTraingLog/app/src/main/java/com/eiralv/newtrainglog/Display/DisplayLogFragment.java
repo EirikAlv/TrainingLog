@@ -115,7 +115,9 @@ public class DisplayLogFragment extends android.app.Fragment {
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).popupFragment(new CalendarFragment());
+                Bundle bundle = new Bundle();
+                bundle.putString("programName", programName);
+                ((MainActivity) getActivity()).popupFragment(new CalendarFragment(), bundle);
             }
         });
 

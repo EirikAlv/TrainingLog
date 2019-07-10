@@ -58,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack("myfragment");
         fragmentTransaction.commit();
     }
-    public void popupFragment(Fragment newFragment) {
+    public void popupFragment(Fragment newFragment, Bundle bundle) {
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (bundle != null){
+            newFragment.setArguments(bundle);
+        }
         fragmentTransaction.add(R.id.myContainer, newFragment);
         fragmentTransaction.addToBackStack("myfragment");
         fragmentTransaction.commit();

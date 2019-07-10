@@ -1,12 +1,18 @@
 package com.eiralv.newtrainglog.Display;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import sun.bob.mcalendarview.MarkStyle;
 import sun.bob.mcalendarview.listeners.OnDateClickListener;
@@ -21,12 +27,19 @@ public class CalendarFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
 
+        Bundle bundle = getArguments();
+        String programName = bundle.getString("programName");
+        ArrayList<LocalDate> dates = ((MainActivity) getActivity()).dbHandler.getLocalDateToList(programName);
+
         MCalendarView calendarView = view.findViewById(R.id.calendar);
-        calendarView.markDate(new DateData(2019, 07, 03).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE)));
 
-        calendarView.setMarkedStyle(MarkStyle.DOT, Color.GREEN);
+        for (LocalDate date : dates) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                calendarView.markDate(new DateData(date.getYear(), date.getMonthValue(), date.getDayOfMonth())
+                        .setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE)));
+            }
+        }
 
-        calendarView.markDate(2019, 07, 19);
 
         return view;
     }
