@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import sun.bob.mcalendarview.MarkStyle;
 import sun.bob.mcalendarview.listeners.OnDateClickListener;
-import sun.bob.mcalendarview.listeners.OnMonthChangeListener;
 import sun.bob.mcalendarview.MCalendarView;
 import sun.bob.mcalendarview.vo.DateData;
 import sun.bob.mcalendarview.vo.MarkedDates;
@@ -37,6 +36,7 @@ public class CalendarFragment extends android.app.Fragment {
         ArrayList<LocalDate> dates = ((MainActivity) getActivity()).dbHandler.getLocalDateToList(programName);
 
         calendarView = view.findViewById(R.id.calendar);
+        calendarView.getMarkedDates().getAll().clear();
 
         for (LocalDate date : dates) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
