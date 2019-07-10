@@ -8,11 +8,23 @@
     <TextView
         android:id="@+id/list_item_title"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
+        android:gravity="left"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        style="@style/customTextViewStyle"/>
+        style="@style/customTextViewStyle"
+        android:layout_toRightOf="@id/logImageExercise"/>
+
+    <ImageView
+        android:id="@+id/logImageExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/list_item_title"
+        android:background="@color/bottomNavBarColor"
+        android:src="@drawable/outline_notes_white_24dp"
+        style="@style/titleIconStye"/>
 
     <ListView
         android:id="@+id/list_item_ListView"

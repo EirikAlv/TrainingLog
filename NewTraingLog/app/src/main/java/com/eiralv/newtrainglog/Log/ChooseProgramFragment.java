@@ -37,8 +37,6 @@ public class ChooseProgramFragment extends android.app.Fragment {
 
         //set title of fragment
         list_item_title = view.findViewById(R.id.list_item_title);
-        list_item_title.setText("Log: Choose Program");
-
 
         //handling listview, and setting adapter
         list_item_ListView = view.findViewById(R.id.list_item_ListView);
