@@ -1,5 +1,6 @@
 package com.eiralv.newtrainglog.Display;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.media.Image;
 import android.os.Build;
@@ -38,7 +39,7 @@ import sun.bob.mcalendarview.MCalendarView;
 
 import static java.time.LocalDate.parse;
 
-public class DisplayLogFragment extends android.app.Fragment {
+public class DisplayLogFragment extends android.app.Fragment implements MainActivity.OnBackPressedListener {
 
     private ListView logListView;
     private ArrayAdapter listAdapter;
@@ -47,6 +48,7 @@ public class DisplayLogFragment extends android.app.Fragment {
     private String date;
     private DisplayLogFragment thisFragment = this;
     View cView;
+    private boolean fromCalendar;
 
 
 
@@ -55,6 +57,7 @@ public class DisplayLogFragment extends android.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         cView = inflater.inflate(R.layout.display_log_fragment, container, false);
+        ((MainActivity) getActivity()).setOnBackPressedListener(this);
 
         //bottom navigation
         new MyBottomNavigationView(thisFragment, cView).selectedTab("Display");
@@ -62,6 +65,7 @@ public class DisplayLogFragment extends android.app.Fragment {
         Bundle bundle = getArguments();
         this.programName = bundle.getString("programName");
         this.date = bundle.getString("dato");
+        this.fromCalendar = bundle.getBoolean("calendar");
 
         //title
         String dateTitle = null;
@@ -119,6 +123,7 @@ public class DisplayLogFragment extends android.app.Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("programName", programName);
                 //((MainActivity) getActivity()).popupFragment(new CalendarFragment(), bundle);
+                ((MainActivity) getActivity()).removeOnBackPressedListener();
                 ((MainActivity) getActivity()).switchScreen(thisFragment, new CalendarFragment(), bundle);
             }
         });
@@ -127,4 +132,15 @@ public class DisplayLogFragment extends android.app.Fragment {
     }
 
 
+    @Override
+    public void doBack() {
+        if(fromCalendar){
+            FragmentManager manager = getActivity().getFragmentManager();
+            manager.popBackStack();
+            manager.popBackStack();
+        }else{
+            ((MainActivity) getActivity()).removeOnBackPressedListener();
+            getActivity().onBackPressed();
+        }
+    }
 }

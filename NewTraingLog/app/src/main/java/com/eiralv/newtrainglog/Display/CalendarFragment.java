@@ -54,9 +54,10 @@ public class CalendarFragment extends android.app.Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("dato", dato);
                 bundle.putString("programName", programName);
+                bundle.putBoolean("calendar", true);
                 MarkedDates md = calendarView.getMarkedDates();
                 ArrayList<DateData> liste = md.getAll();
-                if(liste.indexOf(date) > 0) {
+                if(liste.indexOf(date) >= 0) {
                     ((MainActivity) getActivity()).switchScreen(thisFragment, new DisplayLogFragment(), bundle);
                 }
             }

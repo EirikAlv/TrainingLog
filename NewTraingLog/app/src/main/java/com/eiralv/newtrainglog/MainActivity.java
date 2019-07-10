@@ -9,23 +9,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import org.apache.commons.io.FileUtils;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     public MyDBHandler dbHandler;
     private String mesurement;
+
+    protected OnBackPressedListener onBackPressedListener;
+
+    public interface OnBackPressedListener {
+        void doBack();
+    }
+
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener;
+    }
+
+    public void removeOnBackPressedListener() {
+        this.onBackPressedListener = null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack("myfragment");
         fragmentTransaction.commit();
     }
+
     public void popupFragment(Fragment newFragment, Bundle bundle) {
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (bundle != null){
+        if (bundle != null) {
             newFragment.setArguments(bundle);
         }
         fragmentTransaction.add(R.id.myContainer, newFragment);
@@ -71,8 +75,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
+        if (onBackPressedListener != null) {
+            onBackPressedListener.doBack();
+        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
