@@ -62,7 +62,7 @@ public class ListMoreAdapter extends ArrayAdapter<String> {
 
                 if(fragment.getClass() == ChooseProgramFragment.class) {
 
-                    final PopupMenu popupMenu = new PopupMenu(v.getContext(), moreButton);
+                    final PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                     popupMenu.getMenuInflater().inflate(R.menu.edit_prog_popup_menu, popupMenu.getMenu());
 
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
