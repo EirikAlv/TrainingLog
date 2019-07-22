@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
@@ -26,7 +27,7 @@ public class CalendarFragment extends android.app.Fragment {
     private String programName;
     private MCalendarView calendarView;
 
-    
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +39,11 @@ public class CalendarFragment extends android.app.Fragment {
 
         calendarView = view.findViewById(R.id.calendar);
         calendarView.getMarkedDates().getAll().clear();
+        //calendarView.setDateCell(R.layout.date_cell);
+        //TextView t = view.findViewById(R.id.id_cell_text);
+
+
+
 
         for (LocalDate date : dates) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

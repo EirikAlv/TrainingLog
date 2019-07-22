@@ -158,23 +158,26 @@ public class CreateProgramFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 String exercise = setET.getText().toString();
-                if (nothingAdded) {
+                boolean emptyString = exercise.equals("");
+                if (emptyString){
+                    Toast.makeText(getActivity(), "Exercise name is empty", Toast.LENGTH_LONG).show();
+                }
+                if (nothingAdded && !emptyString) {
                     exercises.clear();
                     logLV.setAdapter(exerciseAdapter);
                     nothingAdded = false;
                     logLV.setClickable(true);
                     logLV.setEnabled(true);
-
                 }
                 boolean allerede = false;
                 for (String s : exercises) {
                     if (s.equals(exercise)) {
                         allerede = true;
-                        Toast.makeText(getActivity(), "exercise already added to list", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Exercise already added to list", Toast.LENGTH_LONG).show();
                         break;
                     }
                 }
-                if (!allerede) {
+                if (!allerede && !emptyString) {
                     exerciseAdapter.add(exercise);
                 }
                 setET.setText("");
