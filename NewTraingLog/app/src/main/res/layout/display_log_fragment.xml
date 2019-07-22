@@ -11,7 +11,9 @@
         android:src="@drawable/baseline_arrow_back_ios_black_48dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        style="@style/displayLogTopNavigationStyle"/>
+        style="@style/displayLogTopNavigationStyle"
+        android:layout_alignBottom="@id/dateLogged"
+        />
 
     <TextView
         android:id="@+id/dateLogged"
@@ -20,11 +22,11 @@
         android:layout_alignParentTop="true"
         android:textSize="25sp"
         android:gravity="center"
-        android:layout_alignBottom="@id/leftArrow"
         android:layout_toLeftOf="@id/calendarButton"
         android:layout_toRightOf="@id/leftArrow"
-
-        style="@style/displayLogTopNavigationStyle"/>
+        style="@style/displayLogTopNavigationStyle"
+        android:paddingTop="15dp"
+        android:layout_alignBottom="@id/dateLogged"/>
 
     <ImageButton
         android:id="@+id/calendarButton"
@@ -34,7 +36,8 @@
         android:src="@drawable/calendar"
         android:layout_toLeftOf="@id/rightArrow"
         android:layout_alignBottom="@id/dateLogged"
-        style="@style/displayLogTopNavigationStyle"/>
+        style="@style/displayLogTopNavigationStyle"
+        android:paddingRight="5dp"/>
 
     <ImageButton
         android:id="@+id/rightArrow"
@@ -44,6 +47,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         style="@style/displayLogTopNavigationStyle"
+        android:layout_alignBottom="@id/dateLogged"
         />
 
     <ListView

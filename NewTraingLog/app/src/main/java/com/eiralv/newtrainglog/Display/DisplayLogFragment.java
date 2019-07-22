@@ -49,6 +49,8 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
     private DisplayLogFragment thisFragment = this;
     View cView;
     private boolean fromCalendar;
+    private String prior;
+    private String next;
 
 
 
@@ -88,11 +90,19 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
         //arrow button handling
         ImageButton leftArrow = cView.findViewById(R.id.leftArrow);
         ImageButton rightArrow = cView.findViewById(R.id.rightArrow);
+        prior = ((MainActivity) getActivity()).dbHandler.getPriorLog(programName, date);
+        next = ((MainActivity) getActivity()).dbHandler.getNextLog(programName, date);
+        if(prior == null) {
+            leftArrow.setImageResource(0);
+        }
+        if(next == null) {
+            rightArrow.setImageResource(0);
+        }
 
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String prior = ((MainActivity) getActivity()).dbHandler.getPriorLog(programName, date);
+                //prior = ((MainActivity) getActivity()).dbHandler.getPriorLog(programName, date);
                 if (prior != null) {
                     Bundle bundle = new Bundle();
                     bundle.putString("dato", prior);
@@ -105,7 +115,7 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String next = ((MainActivity) getActivity()).dbHandler.getNextLog(programName, date);
+                //String next = ((MainActivity) getActivity()).dbHandler.getNextLog(programName, date);
                 if (next != null) {
                     Bundle bundle = new Bundle();
                     bundle.putString("dato", next);
@@ -130,7 +140,6 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
 
         return cView;
     }
-
 
     @Override
     public void doBack() {
