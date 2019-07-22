@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -61,7 +62,7 @@ public class LogWorkout extends Fragment {
         list = new ArrayList<>();
         readItems();
 
-        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this);
+        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this, exerciseTittel);
         log_workout_listView.setAdapter(loggingListAdapter);
 
         //EDIT TEXT HANDLING
@@ -110,8 +111,7 @@ public class LogWorkout extends Fragment {
                 ((MainActivity) getActivity()).dbHandler.saveToLogging(new Logging(programTittel, tittelTV.getText().toString(),
                         weightET.getText().toString(), repsET.getText().toString(), ((MainActivity) getActivity()).getMesurement()));
 
-                ListAdapterItem item = new ListAdapterItem(weightET.getText().toString() + " " +
-                        ((MainActivity) getActivity()).getMesurement(), repsET.getText().toString() + " reps");
+                ListAdapterItem item = new ListAdapterItem(weightET.getText().toString(), repsET.getText().toString());
                 list.add(0, item);
 
                 weightET.setText("");
@@ -120,6 +120,16 @@ public class LogWorkout extends Fragment {
                 loggingListAdapter.notifyDataSetChanged();
             }
         });
+
+        //BACK BUTTON HANDLING
+        ImageButton backButton = view.findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
         return view;
     }
 

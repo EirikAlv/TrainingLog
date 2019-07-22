@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
 import com.eiralv.newtrainglog.Log.LogWorkout;
+import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {
 
@@ -25,12 +28,14 @@ public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {
     private Context context;
     private ArrayList<ListAdapterItem> list;
     private Object fragment;
+    private String tittel;
 
-    public LoggingListAdapter(@NonNull Context context, ArrayList<ListAdapterItem> list, Object fragment) {
+    public LoggingListAdapter(@NonNull Context context, ArrayList<ListAdapterItem> list, Object fragment, String tittel) {
         super(context, R.layout.logging_list_row, list);
         this.context = context;
         this.list = list;
         this.fragment = fragment;
+        this.tittel = tittel;
     }
 
     @NonNull
@@ -46,12 +51,18 @@ public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {
         final String currentReps = list.get(position).getReps();
         final String currentWeight = list.get(position).getWeight();
 
-        repsView = customView.findViewById(R.id.repsView);
         weightView = customView.findViewById(R.id.weightsView);
+        TextView logMesurementTV = customView.findViewById(R.id.logMesurementTV);
+        repsView = customView.findViewById(R.id.repsView);
         deleteButton = customView.findViewById(R.id.deleteButton);
 
-        repsView.setText(currentReps);
+        Date dato = new Date();
+        ArrayList<String> mesureListe = ((MainActivity)context).dbHandler
+                .getMesurementPerExerciseDate(tittel, new SimpleDateFormat("yyyy-MM-dd").format(dato));
+
+        logMesurementTV.setText(mesureListe.get((list.size() - 1) - position));
         weightView.setText(currentWeight);
+        repsView.setText(currentReps);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
 

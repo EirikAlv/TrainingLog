@@ -388,7 +388,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
 
-            list.add(new ListAdapterItem(c.getString(3) + " " + c.getString(6), c.getString(4) + " reps"));
+            list.add(new ListAdapterItem(c.getString(3), c.getString(4)));
         }
 
         c.close();

@@ -36,6 +36,5 @@
         android:layout_toRightOf="@id/repsTV"
         android:gravity="left"
 
-
         />
 </RelativeLayout>
