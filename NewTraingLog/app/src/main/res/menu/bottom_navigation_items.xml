@@ -12,5 +12,5 @@
     <item
         android:id="@+id/display_item"
         android:icon="@drawable/outline_personal_video_white_24dp"
-        android:title="Display"/>
+        android:title="History"/>
 </menu>

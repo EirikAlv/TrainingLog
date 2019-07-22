@@ -27,7 +27,6 @@
         android:background="@drawable/bottomline"
         />
 
-
     <Button
         android:id="@+id/displayLogMenuButton"
         android:layout_width="225dp"
@@ -35,7 +34,7 @@
         android:layout_below="@id/logWorkoutButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:text="Display your log"
+        android:text="History"
         android:background="@drawable/bottomline"
         />
 
