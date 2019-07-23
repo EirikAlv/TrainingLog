@@ -11,6 +11,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center"
         style="@style/customTextViewStyle"/>
+
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
@@ -19,7 +20,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/createProgramTitle"
         android:onClick="onExerciseButtonClick"
-        android:text="Add" />
+        android:text="Add"
+        android:textColor="@color/textColor"/>
 
     <EditText
         android:id="@+id/setET"
@@ -34,6 +36,7 @@
         android:layout_toStartOf="@+id/submitButton"
         android:ems="10"
         android:hint="Enter exercise"
+
         android:inputType="textCapSentences"
         style="@style/customEditTextStyle"
         />
@@ -58,5 +61,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true"
         android:text="Save Program"
+        android:textColor="@color/textColor"
         android:onClick="onProgramButtonClick"/>
 </RelativeLayout>

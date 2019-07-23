@@ -9,6 +9,8 @@
         <item name="android:paddingLeft">15dip</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
     <style name="customTextViewStyle">
         <item name="android:paddingTop">10dp</item>
@@ -22,6 +24,7 @@
     <style name="bottomNavStyle">
         <item name="android:background">@color/bottomNavBarColor</item>
         <item name="android:paddingTop">3dp</item>
+
     </style>
     <style name="homeButtonStyle" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
@@ -31,6 +34,11 @@
         <item name="android:gravity">right</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+    <style name="historyRowTextViewSmall">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:gravity">left</item>
     </style>
     <style name="editExerciseButtons">
         <item name="android:layout_width">60dp</item>
@@ -40,6 +48,7 @@
     </style>
     <style name="titleIconStye">
         <item name="android:paddingLeft">10dp</item>
+        <item name="android:tint">@color/textColor</item>
     </style>
     <style name="displayLogTopNavigationStyle">
         <item name="android:background">@color/bottomNavBarColor</item>

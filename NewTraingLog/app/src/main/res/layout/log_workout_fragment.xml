@@ -68,6 +68,7 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/tittelTV"
         android:text="Add"
+        android:textColor="@color/textColor"
         android:layout_alignParentRight="true"
         />
 

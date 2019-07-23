@@ -7,7 +7,9 @@
     <color name="colorGray">#CCCCCC</color>
     <color name="listViewItemGrey">#f5f5f5</color>
     <color name="bottomNavBarColor">#e0e0e0</color>
-    <color name="textColor">#000000</color>
+    <color name="textColor">#FF4081</color>
+    <color name="hintColor">#3F51B5</color>
+    <color name="bottomLineColor">#3F5</color>
     <color name="backgroudColor">#ffffff</color>
     <color name="bottomNavTint">#000000</color>
     <color name="bottomTextColor">#000000</color>

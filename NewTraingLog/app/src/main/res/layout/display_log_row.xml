@@ -17,8 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/weightTV"
         android:layout_alignParentBottom="true"
-        android:gravity="left"
-        />
+        style="@style/historyRowTextViewSmall"        />
 
     <TextView
         android:id="@+id/repsTV"
@@ -34,7 +33,6 @@
         android:text="reps"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/repsTV"
-        android:gravity="left"
-
+        style="@style/historyRowTextViewSmall"
         />
 </RelativeLayout>

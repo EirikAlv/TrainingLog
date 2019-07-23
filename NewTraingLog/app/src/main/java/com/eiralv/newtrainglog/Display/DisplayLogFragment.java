@@ -73,7 +73,7 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
         String dateTitle = null;
         try {
             Date dato = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-            dateTitle = new SimpleDateFormat("dd MMMM yyyy").format(dato);
+            dateTitle = new SimpleDateFormat("dd MMM yyyy").format(dato);
         } catch (ParseException e) {
             e.printStackTrace();
         }

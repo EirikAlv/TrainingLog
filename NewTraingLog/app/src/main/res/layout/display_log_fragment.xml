@@ -13,20 +13,33 @@
         android:layout_alignParentLeft="true"
         style="@style/displayLogTopNavigationStyle"
         android:layout_alignBottom="@id/dateLogged"
+        android:tint="@color/textColor"
+        />
+
+    <android.support.design.internal.BaselineLayout
+        android:id="@+id/fillerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/leftArrow"
+        android:layout_toLeftOf="@id/dateLogged"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/dateLogged"
+        style="@style/displayLogTopNavigationStyle"
         />
 
     <TextView
         android:id="@+id/dateLogged"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:textSize="25sp"
         android:gravity="center"
-        android:layout_toLeftOf="@id/calendarButton"
-        android:layout_toRightOf="@id/leftArrow"
+        android:layout_centerHorizontal="true"
         style="@style/displayLogTopNavigationStyle"
         android:paddingTop="15dp"
-        android:layout_alignBottom="@id/dateLogged"/>
+        android:layout_alignBottom="@id/dateLogged"
+        android:textColor="@color/textColor"
+        android:paddingBottom="5dp"/>
 
     <ImageButton
         android:id="@+id/calendarButton"
@@ -34,10 +47,22 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/logListView"
         android:src="@drawable/calendar"
-        android:layout_toLeftOf="@id/rightArrow"
+        android:layout_toRightOf="@id/dateLogged"
         android:layout_alignBottom="@id/dateLogged"
         style="@style/displayLogTopNavigationStyle"
-        android:paddingRight="5dp"/>
+        android:tint="@color/textColor"
+        android:paddingLeft="10dp"/>
+
+    <android.support.design.internal.BaselineLayout
+        android:id="@+id/fillerView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/dateLogged"
+        android:layout_toRightOf="@id/calendarButton"
+        android:layout_toLeftOf="@id/rightArrow"
+        style="@style/displayLogTopNavigationStyle"
+        />
 
     <ImageButton
         android:id="@+id/rightArrow"
@@ -48,6 +73,7 @@
         android:layout_alignParentRight="true"
         style="@style/displayLogTopNavigationStyle"
         android:layout_alignBottom="@id/dateLogged"
+        android:tint="@color/textColor"
         />
 
     <ListView

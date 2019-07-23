@@ -31,6 +31,7 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:onClick="onDeleteButtonClick"
-        android:src="@drawable/round_more_vert_black_48dp" />
+        android:src="@drawable/round_more_vert_black_48dp"
+        android:tint="@color/textColor"/>
 
 </RelativeLayout>

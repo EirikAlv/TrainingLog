@@ -12,6 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:text="Create a custom program"
+        android:textColor="@color/textColor"
         android:background="@drawable/bottomline"
         />
 
@@ -24,6 +25,7 @@
         android:layout_below="@id/createProgramButton"
         android:layout_marginTop="35dp"
         android:text="Log your workout"
+        android:textColor="@color/textColor"
         android:background="@drawable/bottomline"
         />
 
@@ -35,6 +37,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:text="History"
+        android:textColor="@color/textColor"
         android:background="@drawable/bottomline"
         />
 

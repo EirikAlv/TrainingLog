@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/weightsView"
         android:layout_alignBottom="@id/weightsView"
-        android:gravity="left"/>
+        style="@style/historyRowTextViewSmall"/>
 
     <TextView
         android:id="@+id/repsView"
@@ -35,8 +35,8 @@
         android:layout_alignBottom="@id/weightsView"
         android:layout_toRightOf="@id/repsView"
         android:layout_toLeftOf="@id/deleteButton"
-        android:gravity="left"
-        android:text="reps" />
+        android:text="reps"
+        style="@style/historyRowTextViewSmall"/>
 
 
 
@@ -49,6 +49,7 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:onClick="onDeleteButtonClick"
-        android:src="@drawable/outline_close_black_48dp" />
+        android:src="@drawable/outline_close_black_48dp"
+        android:tint="@color/textColor"/>
 
 </RelativeLayout>

@@ -51,8 +51,6 @@ public class CreateProgramFragment extends android.app.Fragment {
         exercises = new ArrayList<>();
         exerciseAdapter = new ListDeleteAdapter(getActivity(), exercises, this);
         simpleAdapter = new CustomBasicListAdapapter(getActivity(), exercises, this);
-        //logLV.setAdapter(exerciseAdapter);
-
 
         //add a dialog box when user opens fragment
         //create a edittex for the dialogbox
