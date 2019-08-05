@@ -23,7 +23,7 @@ import static java.time.LocalDate.parse;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "TreningsLog.db";
     //TABLE NAMES
     private static final String TABLE_PROGRAM = "Program";
@@ -31,6 +31,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String TABLE_OVELSE = "Ovelse";
     private static final String TABLE_PROGREG = "ProgOvelseReg";
     private static final String TABLE_MESURE = "Mesure";
+    private static final String TABLE_HISTORY_PROGRAM = "HistoryProgram";
+    private static final String TABLE_HISTORY_LOG = "HistoryLog";
     //COMMON COLUMN NAMES
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_OVELSE = "OvelseNavn";
@@ -73,11 +75,24 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String query5 = "create table " + TABLE_MESURE + "(" +
                 COLUMN_ID + " integer primary key autoincrement, " +
                 COLUMN_MESUREMENT + " text);";
+        String query6 = "create table " + TABLE_HISTORY_PROGRAM + "(" +
+                COLUMN_ID + " integer primary key autoincrement, " +
+                COLUMN_PROGRAM + " text unique);";
+        String query7 = "create table " + TABLE_HISTORY_LOG + "(" +
+                COLUMN_ID + " integer primary key autoincrement, " +
+                COLUMN_PROGRAM + " text, " +
+                COLUMN_OVELSE + " text, " +
+                COLUMN_VEKT + " text, " +
+                COLUMN_REPS + " text, " +
+                COLUMN_DATO + " text, " +
+                COLUMN_WEIGHTMESURE + " text );";
         db.execSQL(query1);
         db.execSQL(query2);
         db.execSQL(query3);
         db.execSQL(query4);
         db.execSQL(query5);
+        db.execSQL(query6);
+        db.execSQL(query7);
         ContentValues values = new ContentValues();
         values.put(COLUMN_MESUREMENT, "kg");
         long svar = db.insert(TABLE_MESURE, null, values);
@@ -93,6 +108,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + TABLE_PROGREG);
         db.execSQL("drop table if exists " + TABLE_LOGGING);
         db.execSQL("drop table if exists " + TABLE_MESURE);
+        db.execSQL("drop table if exists " + TABLE_HISTORY_PROGRAM);
+        db.execSQL("drop table if exists " + TABLE_HISTORY_LOG);
 
         onCreate(db);
     }
@@ -136,6 +153,45 @@ public class MyDBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_PROGRAM, program.getProgramNavn());
         db.insert(TABLE_PROGRAM, null, values);
+        db.close();
+    }
+
+    public void addHistoryProgram(String programName) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PROGRAM, programName);
+        db.insert(TABLE_HISTORY_PROGRAM, null, values);
+        db.close();
+    }
+
+    public void transferToHistoryLog(String programName) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            Logging newLog = new Logging(c.getString(1), c.getString(2), c.getString(3), c.getString(4)
+                    , c.getString(6));
+            newLog.setDato(c.getString(5));
+            saveToHistoryLog(newLog);
+        }
+        c.close();
+        db.close();
+    }
+
+    private void saveToHistoryLog(Logging newLog) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PROGRAM, newLog.getProgramNavn());
+        values.put(COLUMN_OVELSE, newLog.getOvelseNavn());
+        values.put(COLUMN_VEKT, newLog.getVekt());
+        values.put(COLUMN_REPS, newLog.getReps());
+        values.put(COLUMN_DATO, newLog.getDato());
+        values.put(COLUMN_WEIGHTMESURE, newLog.getMesure());
+        long svar = db.insert(TABLE_HISTORY_LOG, null, values);
+        if (svar == -1) {
+            Toast.makeText(this.context, "something went wrong when saving logging to db", Toast.LENGTH_LONG).show();
+        }
         db.close();
     }
 
@@ -230,6 +286,20 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<String> historyProgramToList() {
+        ArrayList<String> list = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        //GET EVERYTHING FROM PROGOVELSEREG TABLE
+        String query = "select * from " + TABLE_HISTORY_PROGRAM;
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            list.add(c.getString(1));
+        }
+        c.close();
+        db.close();
+        return list;
+    }
+
     public ArrayList<String> datesToList(String programName) {
         ArrayList<String> list = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
@@ -243,7 +313,43 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<LocalDate> getLocalDateToList(String programName){
+    public ArrayList<String> historyDatesToList(String programName) {
+        ArrayList<String> list = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select " + COLUMN_DATO + " from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " group by " + COLUMN_DATO;
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            list.add(c.getString(0));
+        }
+        c.close();
+        db.close();
+        return list;
+    }
+
+    /**
+     * Debugging method to see what is in table_history_log
+     */
+    public void historyDatabaseToString() {
+        String dbString = "";
+        String progString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        //GET EVERYTHING FROM PROGOVELSEREG TABLE
+        String query = "select * from " + TABLE_HISTORY_LOG;
+        String query2 = "select * from " + TABLE_HISTORY_PROGRAM;
+        Cursor c = db.rawQuery(query, null);
+        Cursor b = db.rawQuery(query2, null);
+        while (c.moveToNext()) {
+            dbString += c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " " +
+                    c.getString(4) + " " + c.getString(5) + c.getString(6) + "\n";
+        }
+        c.close();
+        while (b.moveToNext()) {
+            progString += b.getString(1) + "\n";
+        }
+        db.close();
+    }
+
+    public ArrayList<LocalDate> getLocalDateToList(String programName) {
         ArrayList<String> list = datesToList(programName);
         ArrayList<LocalDate> returnList = new ArrayList<>();
         for (String s : list) {
@@ -326,6 +432,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
      */
     public String mostResentLog(String program) {
         ArrayList<String> strings = datesToList(program);
+        strings.addAll(historyDatesToList(program));
         ArrayList<LocalDate> datoer = new ArrayList<>();
         for (String s : strings) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -335,8 +442,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return Collections.max(datoer).toString();
     }
 
+    /**
+     * @param programName
+     * @param dato
+     * @return arraylist containing distinct exercises that has been logged in a certain program on a certain date
+     * both from the logging table and from history logging table
+     */
     public ArrayList<String> getExercisePerProgramDate(String programName, String dato) {
         String query2 = "select distinct OvelseNavn from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
+                COLUMN_DATO + "= \"" + dato + "\"";
+        String query = "select distinct OvelseNavn from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"" + " and " +
                 COLUMN_DATO + "= \"" + dato + "\"";
         ArrayList<String> ovelser = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
@@ -345,6 +460,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
             ovelser.add(cursor.getString(0));
         }
         cursor.close();
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            ovelser.add(c.getString(0));
+        }
+        c.close();
         db.close();
         return ovelser;
     }
@@ -394,6 +514,24 @@ public class MyDBHandler extends SQLiteOpenHelper {
         c.close();
         db.close();
         return list;
+    }
+
+    /**
+     * @param programName
+     *
+     * Delete everything from history_program and history_log tables
+     */
+    public void deleteHistoryProgram(String programName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from " + TABLE_HISTORY_PROGRAM + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
+        db.execSQL("delete from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
+        db.close();
+    }
+
+    public void deleteAllLoggedLines(String programName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
+        db.close();
     }
 
     //method to delete a program and all its content
@@ -460,12 +598,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
                 "and " + COLUMN_DATO + "= \"" + dato + "\"";
+        String query2 = "select * from " + TABLE_HISTORY_LOG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
+                "and " + COLUMN_DATO + "= \"" + dato + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             returnList.add(new ListAdapterItem(c.getString(3), c.getString(4)));
         }
-
         c.close();
+        Cursor b = db.rawQuery(query2, null);
+        while (b.moveToNext()) {
+            returnList.add(new ListAdapterItem(b.getString(3), b.getString(4)));
+        }
+        b.close();
         db.close();
 
         return returnList;
@@ -477,12 +621,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
                 "and " + COLUMN_DATO + "= \"" + dato + "\"";
+        String query2 = "select * from " + TABLE_HISTORY_LOG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
+                "and " + COLUMN_DATO + "= \"" + dato + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             returnList.add(c.getString(6));
         }
-
         c.close();
+        Cursor b = db.rawQuery(query2, null);
+        while (b.moveToNext()) {
+            returnList.add(b.getString(6));
+        }
+        b.close();
         db.close();
 
         return returnList;

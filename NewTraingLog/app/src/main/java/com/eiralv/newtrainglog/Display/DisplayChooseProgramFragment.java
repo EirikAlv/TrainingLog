@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eiralv.newtrainglog.Adapter.CustomBasicListAdapapter;
+import com.eiralv.newtrainglog.Adapter.DisplayChooseProgramAdapter;
 import com.eiralv.newtrainglog.HomeFragment;
 import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
 import com.eiralv.newtrainglog.MainActivity;
@@ -41,7 +42,7 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
         displayProgramListview = view.findViewById(R.id.displayProgramListview);
         list = new ArrayList<>();
         readItems();
-        listAdapter = new CustomBasicListAdapapter(getActivity(), list, this);
+        listAdapter = new DisplayChooseProgramAdapter(getActivity(), list, this);
         displayProgramListview.setAdapter(listAdapter);
 
         setupListViewListener();
@@ -64,11 +65,18 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
 
     private void readItems() {
         ArrayList<String> programer = ((MainActivity) getActivity()).dbHandler.programToList();
+        ArrayList<String> historyProg = ((MainActivity) getActivity()).dbHandler.historyProgramToList();
         for (String s : programer) {
             if (!((MainActivity) getActivity()).dbHandler.datesToList(s).isEmpty()) {
                 list.add(s);
             }
         }
+        for (String s : historyProg) {
+            if (!((MainActivity) getActivity()).dbHandler.historyDatesToList(s).isEmpty()) {
+                list.add(s);
+            }
+        }
+        ((MainActivity) getActivity()).dbHandler.historyDatabaseToString();
     }
 
 }

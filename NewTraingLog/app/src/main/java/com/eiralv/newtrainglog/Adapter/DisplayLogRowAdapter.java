@@ -39,8 +39,10 @@ public class DisplayLogRowAdapter extends ArrayAdapter<String> {
         TextView titleTv = customView.findViewById(R.id.titleTv);
         titleTv.setText(list.get(position));
 
-        ArrayList<ListAdapterItem> tekstList = ((MainActivity)context).dbHandler.getLogLinePerExerciseDateNoMesurement(list.get(position), date);
-        ArrayList<String> mesureListe = ((MainActivity)context).dbHandler.getMesurementPerExerciseDate(list.get(position), date);
+        ArrayList<ListAdapterItem> tekstList = ((MainActivity)context).dbHandler.
+                getLogLinePerExerciseDateNoMesurement(list.get(position), date);
+        ArrayList<String> mesureListe = ((MainActivity)context).dbHandler.
+                getMesurementPerExerciseDate(list.get(position), date);
 
         LinearLayout linList = customView.findViewById(R.id.linear_list);
         linList.removeAllViews();
