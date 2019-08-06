@@ -351,6 +351,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public ArrayList<LocalDate> getLocalDateToList(String programName) {
         ArrayList<String> list = datesToList(programName);
+        list.addAll(historyDatesToList(programName));
         ArrayList<LocalDate> returnList = new ArrayList<>();
         for (String s : list) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

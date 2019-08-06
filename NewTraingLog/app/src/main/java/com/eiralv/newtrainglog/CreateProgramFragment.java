@@ -72,8 +72,9 @@ public class CreateProgramFragment extends android.app.Fragment {
         final AlertDialog dialog = new AlertDialog.Builder(view.getContext())
                 .setMessage("Choose a name for your program")
                 .setPositiveButton("save", null) //Set to null. We override the onclick
-                .setNegativeButton("cancel", null).setView(input)
+                .setNegativeButton("cancel", null).setView(input).setCancelable(false)
                 .create();
+        dialog.setCanceledOnTouchOutside(false);
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
