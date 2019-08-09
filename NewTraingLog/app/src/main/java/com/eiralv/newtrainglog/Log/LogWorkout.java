@@ -146,5 +146,27 @@ public class LogWorkout extends Fragment {
         }
     }
 
+    //method to add logs for different dates for testing purposes
+    /*
+    private void saveForTesting() {
+        Logging log1 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
+        Logging log2 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
+        Logging log3 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
+        Logging log4 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
+
+        log1.setDato("2019-08-01");
+        log2.setDato("2019-08-02");
+        log3.setDato("2019-08-03");
+        log4.setDato("2019-08-05");
+
+        ((MainActivity) getActivity()).dbHandler.saveToLogging(log1);
+        ((MainActivity) getActivity()).dbHandler.saveToLogging(log2);
+        ((MainActivity) getActivity()).dbHandler.saveToLogging(log3);
+        ((MainActivity) getActivity()).dbHandler.saveToLogging(log4);
+
+
+
+    }
+    */
 
 }

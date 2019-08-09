@@ -275,7 +275,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public ArrayList<String> programToList() {
         ArrayList<String> list = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        //GET EVERYTHING FROM PROGOVELSEREG TABLE
         String query = "select * from " + TABLE_PROGRAM;
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
@@ -289,7 +288,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public ArrayList<String> historyProgramToList() {
         ArrayList<String> list = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        //GET EVERYTHING FROM PROGOVELSEREG TABLE
         String query = "select * from " + TABLE_HISTORY_PROGRAM;
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {

@@ -1,4 +1,6 @@
 package com.eiralv.newtrainglog.Log;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,6 +50,10 @@ public class ChooseProgramFragment extends android.app.Fragment {
 
         setupListViewListener();
 
+        if (((MainActivity) getActivity()).dbHandler.programToList().isEmpty()) {
+            alertDialogExplenation();
+        }
+
         return view;
     }
 
@@ -68,6 +74,21 @@ public class ChooseProgramFragment extends android.app.Fragment {
         for (String s : programer) {
             list.add(s);
         }
+    }
+
+    private void alertDialogExplenation() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setMessage("There is no current program available to log");
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                (getActivity()).onBackPressed();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getActivity().getResources().getColor(R.color.alertButtons));
     }
 
 }
