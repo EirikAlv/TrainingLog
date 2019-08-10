@@ -417,7 +417,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
      */
     public String getNextLog(String programName, String date) {
         ArrayList<String> list = datesToList(programName);
-        list.addAll(historyDatesToList(programName));
+        ArrayList<String> historyList = historyDatesToList(programName);
+        for (String s : historyList) {
+            boolean found = false;
+            for (int i = 0; i < list.size(); i++) {
+                if(s.equals(list.get(i))) {
+                    found = true;
+                }
+            }
+            if(!found) {
+                list.add(s);
+            }
+        }
         String returnString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDate thisDate = parse(date);
@@ -479,7 +490,15 @@ public class MyDBHandler extends SQLiteOpenHelper {
         cursor.close();
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
-            ovelser.add(c.getString(0));
+            boolean found = false;
+            for (String s : ovelser) {
+                if (s.equals(c.getString(0))){
+                    found = true;
+                }
+            }
+            if (!found) {
+                ovelser.add(c.getString(0));
+            }
         }
         c.close();
         db.close();
