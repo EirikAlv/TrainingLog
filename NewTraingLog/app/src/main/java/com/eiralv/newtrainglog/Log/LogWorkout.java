@@ -129,6 +129,7 @@ public class LogWorkout extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+        //saveForTesting();
 
         return view;
     }
@@ -149,10 +150,10 @@ public class LogWorkout extends Fragment {
     //method to add logs for different dates for testing purposes
     /*
     private void saveForTesting() {
-        Logging log1 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
-        Logging log2 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
-        Logging log3 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
-        Logging log4 = new Logging(programTittel, tittelTV.getText().toString(), "50", "2", "kg");
+        Logging log1 = new Logging(programTittel, tittelTV.getText().toString(), "35", "4", "kg");
+        Logging log2 = new Logging(programTittel, tittelTV.getText().toString(), "50", "66", "kg");
+        Logging log3 = new Logging(programTittel, tittelTV.getText().toString(), "222", "78", "kg");
+        Logging log4 = new Logging(programTittel, tittelTV.getText().toString(), "745", "32", "kg");
 
         log1.setDato("2019-08-01");
         log2.setDato("2019-08-02");
@@ -163,8 +164,6 @@ public class LogWorkout extends Fragment {
         ((MainActivity) getActivity()).dbHandler.saveToLogging(log2);
         ((MainActivity) getActivity()).dbHandler.saveToLogging(log3);
         ((MainActivity) getActivity()).dbHandler.saveToLogging(log4);
-
-
 
     }
     */

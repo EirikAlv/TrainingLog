@@ -383,12 +383,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
      */
     public String getPriorLog(String programName, String date) {
         ArrayList<String> list = datesToList(programName);
+        list.addAll(historyDatesToList(programName));
         String returnString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDate thisDate = parse(date);
             ArrayList<LocalDate> dates = new ArrayList<>();
             int index = 0;
-            if (list.size() > 1 && !list.get(0).equals(date)) {
+            if (list.size() > 1 /*&& !list.get(0).equals(date)*/) {
                 for (String s : list) {
                     dates.add(parse(s));
                 }
@@ -416,6 +417,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
      */
     public String getNextLog(String programName, String date) {
         ArrayList<String> list = datesToList(programName);
+        list.addAll(historyDatesToList(programName));
         String returnString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDate thisDate = parse(date);
@@ -522,7 +524,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 "and " + COLUMN_DATO + "= \"" + dato + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
-
             list.add(new ListAdapterItem(c.getString(3), c.getString(4)));
         }
 
@@ -532,15 +533,34 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * @param programName
-     *
      * Delete everything from history_program and history_log tables
+     *
+     * @param programName
      */
     public void deleteHistoryProgram(String programName) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("delete from " + TABLE_HISTORY_PROGRAM + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
         db.execSQL("delete from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
         db.close();
+    }
+
+    public void deleteExercisesIfNotUsed(String programName) {
+        ArrayList<String> testList = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select distinct OvelseNavn from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            testList.add(c.getString(0));
+        }
+        c.close();
+        String query2 = "select distinct OvelseNavn from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        Cursor c2 = db.rawQuery(query2, null);
+        while (c2.moveToNext()) {
+            testList.add(c2.getString(0));
+        }
+        c2.close();
+        db.close();
+
     }
 
     public void deleteAllLoggedLines(String programName) {

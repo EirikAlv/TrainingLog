@@ -72,11 +72,20 @@ public class DisplayChooseProgramFragment extends android.app.Fragment {
             }
         }
         for (String s : historyProg) {
+            //Check if program is both historic and "active". and make sure it only shows once in list
             if (!((MainActivity) getActivity()).dbHandler.historyDatesToList(s).isEmpty()) {
-                list.add(s);
+                boolean found = false;
+                for (int i = 0; i < list.size(); i++) {
+                    if(s.equals(list.get(i))) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    list.add(s);
+                }
             }
         }
-        ((MainActivity) getActivity()).dbHandler.historyDatabaseToString();
+        //((MainActivity) getActivity()).dbHandler.historyDatabaseToString();
     }
 
 }

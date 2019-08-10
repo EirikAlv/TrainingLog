@@ -69,6 +69,9 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
         this.date = bundle.getString("dato");
         this.fromCalendar = bundle.getBoolean("calendar");
 
+        //TEEEST
+        ((MainActivity) getActivity()).dbHandler.deleteExercisesIfNotUsed(programName);
+
         //title
         String dateTitle = null;
         try {
