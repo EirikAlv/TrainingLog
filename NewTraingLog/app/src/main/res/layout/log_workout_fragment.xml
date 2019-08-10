@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     >
 
+
+    <TextView
+        android:id="@+id/tittelTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        style="@style/customTextViewStyle"
+
+        />
+
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
@@ -15,17 +27,7 @@
         style="@style/displayLogTopNavigationStyle"
         android:layout_alignBottom="@id/tittelTV"/>
 
-    <TextView
-        android:id="@+id/tittelTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        style="@style/customTextViewStyle"
-        android:layout_toRightOf="@id/backButton"
 
-        />
 
     <EditText
         android:id="@+id/weightET"
