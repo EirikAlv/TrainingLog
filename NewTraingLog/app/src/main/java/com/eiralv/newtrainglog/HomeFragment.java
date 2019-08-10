@@ -15,6 +15,7 @@ import android.widget.Switch;
 
 import com.eiralv.newtrainglog.Display.DisplayChooseProgramFragment;
 import com.eiralv.newtrainglog.Log.ChooseProgramFragment;
+import com.eiralv.newtrainglog.Stats.StatsFragment;
 
 
 public class HomeFragment extends android.app.Fragment {
@@ -64,6 +65,14 @@ public class HomeFragment extends android.app.Fragment {
             }
         });
 
+        //handle stats button
+        Button statsButton = view.findViewById(R.id.statsButton);
+        statsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).switchScreen(thisFragment, new StatsFragment(), null);
+            }
+        });
         /*
         //handle display databaseButton
         displayDatabaseButton = (Button) view.findViewById(R.id.displayDatabaseButton);
