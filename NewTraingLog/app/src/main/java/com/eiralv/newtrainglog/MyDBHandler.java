@@ -114,6 +114,22 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * @return Arraylist of all entries from table Exercises
+     */
+    public ArrayList<String> getAllExercises() {
+        ArrayList<String> returnList = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select " + COLUMN_OVELSE + " from " + TABLE_OVELSE;
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            returnList.add(c.getString(0));
+        }
+        c.close();
+        db.close();
+        return returnList;
+    }
+
     public void setMesure(String mesure) {
         SQLiteDatabase db = getWritableDatabase();
         String query = "update " + TABLE_MESURE + " set " + COLUMN_MESUREMENT + "= \'" + mesure + "\'" + " where " +

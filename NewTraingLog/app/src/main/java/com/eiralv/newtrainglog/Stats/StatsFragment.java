@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class StatsFragment extends android.app.Fragment {
         items.add("no");
         items.add("boom");
         items.add("shaka");
+        ArrayList<String> testList = ((MainActivity)getActivity()).dbHandler.getAllExercises();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
