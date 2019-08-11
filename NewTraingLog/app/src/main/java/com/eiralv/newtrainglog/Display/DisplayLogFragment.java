@@ -87,7 +87,7 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
 
         list = ((MainActivity) getActivity()).dbHandler.getExercisePerProgramDate(programName, date);
 
-        listAdapter = new DisplayLogRowAdapter(this.getActivity(), list, date);
+        listAdapter = new DisplayLogRowAdapter(this.getActivity(), list, date, programName);
         logListView.setAdapter(listAdapter);
 
         //arrow button handling

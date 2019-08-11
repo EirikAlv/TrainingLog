@@ -29,13 +29,15 @@ public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {
     private ArrayList<ListAdapterItem> list;
     private Object fragment;
     private String tittel;
+    private String programName;
 
-    public LoggingListAdapter(@NonNull Context context, ArrayList<ListAdapterItem> list, Object fragment, String tittel) {
+    public LoggingListAdapter(@NonNull Context context, ArrayList<ListAdapterItem> list, Object fragment, String tittel, String programName) {
         super(context, R.layout.logging_list_row, list);
         this.context = context;
         this.list = list;
         this.fragment = fragment;
         this.tittel = tittel;
+        this.programName = programName;
     }
 
     @NonNull
@@ -58,7 +60,7 @@ public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {
 
         Date dato = new Date();
         ArrayList<String> mesureListe = ((MainActivity)context).dbHandler
-                .getMesurementPerExerciseDate(tittel, new SimpleDateFormat("yyyy-MM-dd").format(dato));
+                .getMesurementPerExerciseDate(tittel, new SimpleDateFormat("yyyy-MM-dd").format(dato), programName);
 
         logMesurementTV.setText(mesureListe.get((list.size() - 1) - position));
         weightView.setText(currentWeight);

@@ -62,7 +62,7 @@ public class LogWorkout extends Fragment {
         list = new ArrayList<>();
         readItems();
 
-        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this, exerciseTittel);
+        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this, exerciseTittel, programTittel);
         log_workout_listView.setAdapter(loggingListAdapter);
 
         //EDIT TEXT HANDLING
@@ -139,7 +139,7 @@ public class LogWorkout extends Fragment {
     }
 
     private void readItems() {
-        ArrayList<ListAdapterItem> logging = ((MainActivity) getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel);
+        ArrayList<ListAdapterItem> logging = ((MainActivity) getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel, programTittel);
         if (!logging.isEmpty()) {
             for (ListAdapterItem s : logging) {
                 list.add(0, s);

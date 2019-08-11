@@ -20,12 +20,14 @@ public class DisplayLogRowAdapter extends ArrayAdapter<String> {
     private Context context;
     private ArrayList<String> list;
     private String date;
+    private String programName;
 
-    public DisplayLogRowAdapter(@NonNull Context context, ArrayList<String> list, String date) {
+    public DisplayLogRowAdapter(@NonNull Context context, ArrayList<String> list, String date, String programName) {
         super(context, R.layout.list_in_list, list);
         this.context = context;
         this.list = list;
         this.date = date;
+        this.programName = programName;
     }
     @NonNull
     @Override
@@ -40,9 +42,9 @@ public class DisplayLogRowAdapter extends ArrayAdapter<String> {
         titleTv.setText(list.get(position));
 
         ArrayList<ListAdapterItem> tekstList = ((MainActivity)context).dbHandler.
-                getLogLinePerExerciseDateNoMesurement(list.get(position), date);
+                getLogLinePerExerciseDateNoMesurement(list.get(position), date, programName);
         ArrayList<String> mesureListe = ((MainActivity)context).dbHandler.
-                getMesurementPerExerciseDate(list.get(position), date);
+                getMesurementPerExerciseDate(list.get(position), date, programName);
 
         LinearLayout linList = customView.findViewById(R.id.linear_list);
         linList.removeAllViews();

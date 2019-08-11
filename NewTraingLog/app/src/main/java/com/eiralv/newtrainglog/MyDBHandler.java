@@ -421,11 +421,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         for (String s : historyList) {
             boolean found = false;
             for (int i = 0; i < list.size(); i++) {
-                if(s.equals(list.get(i))) {
+                if (s.equals(list.get(i))) {
                     found = true;
                 }
             }
-            if(!found) {
+            if (!found) {
                 list.add(s);
             }
         }
@@ -492,7 +492,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         while (c.moveToNext()) {
             boolean found = false;
             for (String s : ovelser) {
-                if (s.equals(c.getString(0))){
+                if (s.equals(c.getString(0))) {
                     found = true;
                 }
             }
@@ -532,7 +532,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<ListAdapterItem> getLogginPerExerciseDate(String exerciseName) {
+    public ArrayList<ListAdapterItem> getLogginPerExerciseDate(String exerciseName, String programTittel) {
 
         ArrayList<ListAdapterItem> list = new ArrayList<>();
         if (android.os.Build.VERSION.SDK_INT >= 26) {
@@ -540,7 +540,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         SQLiteDatabase db = getWritableDatabase();
         String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+                "and " + COLUMN_DATO + "= \"" + dato + "\""+
+                "and " + COLUMN_PROGRAM + "= \"" + programTittel + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             list.add(new ListAdapterItem(c.getString(3), c.getString(4)));
@@ -575,7 +576,15 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String query2 = "select distinct OvelseNavn from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
         Cursor c2 = db.rawQuery(query2, null);
         while (c2.moveToNext()) {
-            testList.add(c2.getString(0));
+            boolean found = false;
+            for (String s : testList) {
+                if (s.equals(c2.getString(0))) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                testList.add(c2.getString(0));
+            }
         }
         c2.close();
         db.close();
@@ -645,15 +654,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public ArrayList<ListAdapterItem> getLogLinePerExerciseDateNoMesurement(String exerciseName, String date) {
+    public ArrayList<ListAdapterItem> getLogLinePerExerciseDateNoMesurement(String exerciseName, String date, String programName) {
         ArrayList<ListAdapterItem> returnList = new ArrayList<>();
 
         this.dato = date;
         SQLiteDatabase db = getWritableDatabase();
         String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+                "and " + COLUMN_DATO + "= \"" + dato + "\"" +
+                "and " + COLUMN_PROGRAM + "= \"" + programName + "\"";
         String query2 = "select * from " + TABLE_HISTORY_LOG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+                "and " + COLUMN_DATO + "= \"" + dato + "\"" +
+                "and " + COLUMN_PROGRAM + "= \"" + programName + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             returnList.add(new ListAdapterItem(c.getString(3), c.getString(4)));
@@ -669,14 +680,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public ArrayList<String> getMesurementPerExerciseDate(String exerciseName, String date) {
+    public ArrayList<String> getMesurementPerExerciseDate(String exerciseName, String date, String programName) {
         ArrayList<String> returnList = new ArrayList<>();
         this.dato = date;
         SQLiteDatabase db = getWritableDatabase();
         String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+                "and " + COLUMN_DATO + "= \"" + dato + "\"" +
+                "and " + COLUMN_PROGRAM + "= \"" + programName + "\"";
         String query2 = "select * from " + TABLE_HISTORY_LOG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\"";
+                "and " + COLUMN_DATO + "= \"" + dato + "\"" +
+                "and " + COLUMN_PROGRAM + "= \"" + programName + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
             returnList.add(c.getString(6));
@@ -690,6 +703,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
 
         return returnList;
+    }
+
+    public void wipeDatabase() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from " + TABLE_PROGRAM);
+        db.execSQL("delete from " + TABLE_PROGREG);
+        db.execSQL("delete from " + TABLE_LOGGING);
+        db.execSQL("delete from " + TABLE_OVELSE);
+        db.execSQL("delete from " + TABLE_HISTORY_PROGRAM);
+        db.execSQL("delete from " + TABLE_HISTORY_LOG);
+        db.close();
     }
 
 
