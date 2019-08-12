@@ -53,7 +53,6 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
     private String next;
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
@@ -70,7 +69,7 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
         this.fromCalendar = bundle.getBoolean("calendar");
 
         //TEEEST
-        ((MainActivity) getActivity()).dbHandler.deleteExercisesIfNotUsed(programName);
+        //((MainActivity) getActivity()).dbHandler.deleteExercisesIfNotUsed(programName);
 
         //title
         String dateTitle = null;
@@ -95,10 +94,10 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
         ImageButton rightArrow = cView.findViewById(R.id.rightArrow);
         prior = ((MainActivity) getActivity()).dbHandler.getPriorLog(programName, date);
         next = ((MainActivity) getActivity()).dbHandler.getNextLog(programName, date);
-        if(prior == null) {
+        if (prior == null) {
             leftArrow.setImageResource(0);
         }
-        if(next == null) {
+        if (next == null) {
             rightArrow.setImageResource(0);
         }
 
@@ -146,11 +145,11 @@ public class DisplayLogFragment extends android.app.Fragment implements MainActi
 
     @Override
     public void doBack() {
-        if(fromCalendar){
+        if (fromCalendar) {
             FragmentManager manager = getActivity().getFragmentManager();
             manager.popBackStack();
             manager.popBackStack();
-        }else{
+        } else {
             ((MainActivity) getActivity()).removeOnBackPressedListener();
             getActivity().onBackPressed();
         }

@@ -108,6 +108,7 @@ public class ListMoreAdapter extends ArrayAdapter<String> {
                     ((MainActivity) getContext()).dbHandler.addHistoryProgram(currentText);
                 }
                 ((MainActivity) getContext()).dbHandler.transferToHistoryLog(currentText);
+                ((MainActivity) getContext()).dbHandler.transferToHistoryProgReg(currentText);
                 ((MainActivity) getContext()).dbHandler.deleteProgram(currentText);
 
 

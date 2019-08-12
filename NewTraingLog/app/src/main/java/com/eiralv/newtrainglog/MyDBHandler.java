@@ -23,7 +23,7 @@ import static java.time.LocalDate.parse;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "TreningsLog.db";
     //TABLE NAMES
     private static final String TABLE_PROGRAM = "Program";
@@ -33,6 +33,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String TABLE_MESURE = "Mesure";
     private static final String TABLE_HISTORY_PROGRAM = "HistoryProgram";
     private static final String TABLE_HISTORY_LOG = "HistoryLog";
+    private static final String TABLE_HISTORY_PROGREG = "HistoryOvelseReg";
     //COMMON COLUMN NAMES
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_OVELSE = "OvelseNavn";
@@ -86,6 +87,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_REPS + " text, " +
                 COLUMN_DATO + " text, " +
                 COLUMN_WEIGHTMESURE + " text );";
+        String query8 = "create table " + TABLE_HISTORY_PROGREG + "(" +
+                COLUMN_PROGRAM + " text, " +
+                COLUMN_OVELSE + " text );";
         db.execSQL(query1);
         db.execSQL(query2);
         db.execSQL(query3);
@@ -93,6 +97,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL(query5);
         db.execSQL(query6);
         db.execSQL(query7);
+        db.execSQL(query8);
         ContentValues values = new ContentValues();
         values.put(COLUMN_MESUREMENT, "kg");
         long svar = db.insert(TABLE_MESURE, null, values);
@@ -110,6 +115,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + TABLE_MESURE);
         db.execSQL("drop table if exists " + TABLE_HISTORY_PROGRAM);
         db.execSQL("drop table if exists " + TABLE_HISTORY_LOG);
+        db.execSQL("drop table if exists " + TABLE_HISTORY_PROGREG);
 
         onCreate(db);
     }
@@ -180,6 +186,29 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void transferToHistoryProgReg(String programName) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select * from " + TABLE_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            saveToHistoryProgReg(c.getString(0), c.getString(1));
+        }
+        c.close();
+        db.close();
+    }
+
+    private void saveToHistoryProgReg(String programName, String exerciseName) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PROGRAM, programName);
+        values.put(COLUMN_OVELSE, exerciseName);
+        long svar = db.insert(TABLE_HISTORY_PROGREG, null, values);
+        if (svar == -1) {
+            Toast.makeText(this.context, "something went wrong when saving logging to db", Toast.LENGTH_LONG).show();
+        }
+        db.close();
+    }
+
     public void transferToHistoryLog(String programName) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -195,6 +224,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Helper method for transferToHistoryLog to save to db inside while loop
+     *
+     * @param newLog
+     */
     private void saveToHistoryLog(Logging newLog) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -540,7 +574,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         SQLiteDatabase db = getWritableDatabase();
         String query = "select * from " + TABLE_LOGGING + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"" +
-                "and " + COLUMN_DATO + "= \"" + dato + "\""+
+                "and " + COLUMN_DATO + "= \"" + dato + "\"" +
                 "and " + COLUMN_PROGRAM + "= \"" + programTittel + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
@@ -561,34 +595,39 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("delete from " + TABLE_HISTORY_PROGRAM + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
         db.execSQL("delete from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
+        deleteExercisesIfNotUsed(programName);
+        db.execSQL("delete from " + TABLE_HISTORY_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
         db.close();
     }
 
-    public void deleteExercisesIfNotUsed(String programName) {
-        ArrayList<String> testList = new ArrayList<>();
+    private void deleteExercisesIfNotUsed(String programName) {
+        ArrayList<String> historyExerciseList = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String query = "select distinct OvelseNavn from " + TABLE_LOGGING + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        String query = "select distinct OvelseNavn from " + TABLE_HISTORY_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
         Cursor c = db.rawQuery(query, null);
         while (c.moveToNext()) {
-            testList.add(c.getString(0));
+            historyExerciseList.add(c.getString(0));
         }
         c.close();
-        String query2 = "select distinct OvelseNavn from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        ArrayList<Boolean> foundList = new ArrayList<>();
+        for (String s : historyExerciseList) {
+            foundList.add(isExerciseInProgReg(s));
+        }
+        //db.close();
+    }
+    private boolean isExerciseInProgReg(String exerciseName) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query2 = "select distinct OvelseNavn from " + TABLE_PROGREG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"";
         Cursor c2 = db.rawQuery(query2, null);
         while (c2.moveToNext()) {
-            boolean found = false;
-            for (String s : testList) {
-                if (s.equals(c2.getString(0))) {
-                    found = true;
-                }
-            }
-            if (!found) {
-                testList.add(c2.getString(0));
+            String foundString = c2.getString(0);
+            if (c2.getString(0) == null) {
+                db.close();
+                return false;
             }
         }
-        c2.close();
-        db.close();
-
+        //db.close();
+        return true;
     }
 
     public void deleteAllLoggedLines(String programName) {
@@ -713,6 +752,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("delete from " + TABLE_OVELSE);
         db.execSQL("delete from " + TABLE_HISTORY_PROGRAM);
         db.execSQL("delete from " + TABLE_HISTORY_LOG);
+        db.execSQL("delete from " + TABLE_HISTORY_PROGREG);
         db.close();
     }
 
