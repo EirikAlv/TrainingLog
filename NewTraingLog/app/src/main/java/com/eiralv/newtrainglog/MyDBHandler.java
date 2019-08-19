@@ -586,6 +586,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return list;
     }
 
+    private ArrayList<String> getHistoryExerciseList(String programName) {
+        ArrayList<String> historyExerciseList = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "select distinct OvelseNavn from " + TABLE_HISTORY_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
+        Cursor c = db.rawQuery(query, null);
+        while (c.moveToNext()) {
+            historyExerciseList.add(c.getString(0));
+        }
+        c.close();
+        return historyExerciseList;
+    }
+
     /**
      * Delete everything from history_program and history_log tables
      *
@@ -595,39 +607,42 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("delete from " + TABLE_HISTORY_PROGRAM + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
         db.execSQL("delete from " + TABLE_HISTORY_LOG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
-        deleteExercisesIfNotUsed(programName);
+        ArrayList<String> historyExerciseList = getHistoryExerciseList(programName);
         db.execSQL("delete from " + TABLE_HISTORY_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\";");
+        deleteExercisesIfNotUsed(historyExerciseList);
         db.close();
     }
 
-    private void deleteExercisesIfNotUsed(String programName) {
-        ArrayList<String> historyExerciseList = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "select distinct OvelseNavn from " + TABLE_HISTORY_PROGREG + " where " + COLUMN_PROGRAM + "= \"" + programName + "\"";
-        Cursor c = db.rawQuery(query, null);
-        while (c.moveToNext()) {
-            historyExerciseList.add(c.getString(0));
-        }
-        c.close();
-        ArrayList<Boolean> foundList = new ArrayList<>();
+    private void deleteExercisesIfNotUsed(ArrayList<String> historyExerciseList) {
+
+        ArrayList<String> deleteList = new ArrayList<>();
         for (String s : historyExerciseList) {
-            foundList.add(isExerciseInProgReg(s));
+            if(!isExerciseInProgRegs(s)) {
+                //delete exercise from db
+                deleteExercise(s);
+            }
         }
         //db.close();
     }
-    private boolean isExerciseInProgReg(String exerciseName) {
+
+    private void deleteExercise(String exercise) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from " + TABLE_OVELSE + " where " + COLUMN_OVELSE + "= \"" + exercise + "\";");
+    }
+
+    private boolean isExerciseInProgRegs(String exerciseName) {
         SQLiteDatabase db = getWritableDatabase();
         String query2 = "select distinct OvelseNavn from " + TABLE_PROGREG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"";
         Cursor c2 = db.rawQuery(query2, null);
         while (c2.moveToNext()) {
-            String foundString = c2.getString(0);
-            if (c2.getString(0) == null) {
-                db.close();
-                return false;
-            }
+            return true;
         }
-        //db.close();
-        return true;
+        String query1 = "select distinct OvelseNavn from " + TABLE_HISTORY_PROGREG + " where " + COLUMN_OVELSE + "= \"" + exerciseName + "\"";
+        Cursor c1 = db.rawQuery(query1, null);
+        while (c1.moveToNext()) {
+            return true;
+        }
+        return false;
     }
 
     public void deleteAllLoggedLines(String programName) {
