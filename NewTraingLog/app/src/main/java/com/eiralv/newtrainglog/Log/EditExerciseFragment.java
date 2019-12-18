@@ -97,8 +97,8 @@ public class EditExerciseFragment extends android.app.Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ovelse = new Ovelse(input.getText().toString());
                         progOvelseReg = new ProgOvelseReg(tittel, input.getText().toString());
-                        list.clear();
-                        readItems();
+                        //list.clear();
+                        //readItems();
                         list.add(ovelse.getOvelseNavn());
                     }
                 });
