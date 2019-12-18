@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
 import com.eiralv.newtrainglog.Log.LogWorkout;
+import com.eiralv.newtrainglog.Log.LogWorkoutFragment;
 import com.eiralv.newtrainglog.MainActivity;
 import com.eiralv.newtrainglog.R;
 
@@ -70,7 +71,10 @@ public class LoggingListAdapter extends ArrayAdapter<ListAdapterItem> {
 
             @Override
             public void onClick(View v) {
-                ((LogWorkout) fragment).deleteLogLine(currentItem);
+                //testing new fragment
+                //må byttes tilbake hvis du angrer på å dropdown meny for øvelser
+                //((LogWorkout) fragment).deleteLogLine(currentItem);
+                ((MainActivity) getContext()).dbHandler.deleteLogLine(programName, tittel, currentItem);
                 list.remove(currentItem);
                 notifyDataSetChanged();
 

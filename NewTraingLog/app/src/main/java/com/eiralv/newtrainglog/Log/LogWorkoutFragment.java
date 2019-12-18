@@ -1,6 +1,5 @@
 package com.eiralv.newtrainglog.Log;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +7,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.Toast;
 import com.eiralv.newtrainglog.Adapter.ListAdapterItem;
 import com.eiralv.newtrainglog.Adapter.LoggingListAdapter;
 import com.eiralv.newtrainglog.MainActivity;
@@ -21,40 +22,52 @@ import com.eiralv.newtrainglog.R;
 
 import java.util.ArrayList;
 
-public class LogWorkout extends Fragment {
+public class LogWorkoutFragment extends Fragment {
 
+
+    private LogWorkoutFragment thisFragment = this;
     private EditText weightET;
     private EditText repsET;
     private Button addButton;
+    private String tittel;
+    private Spinner exerciseDropdown;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> ovelser;
     private ListView log_workout_listView;
-    private TextView tittelTV;
-    private LoggingListAdapter loggingListAdapter;
     private ArrayList<ListAdapterItem> list;
-    private LogWorkout thisFragment = this;
-    private String exerciseTittel;
-    private String programTittel;
+    private LoggingListAdapter loggingListAdapter;
+    private String currentExercise;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.log_workout_fragment, container, false);
+        final View view = inflater.inflate(R.layout.log_workout_fragment_v2, container, false);
 
         //bottom navigation
         new MyBottomNavigationView(thisFragment, view).selectedTab("Log");
 
         Bundle bundle = getArguments();
-        this.exerciseTittel = bundle.getString("exerciseTittel");
-        this.programTittel = bundle.getString("programTittel");
-        tittelTV = view.findViewById(R.id.tittelTV);
-        tittelTV.setText(exerciseTittel);
+        this.tittel = bundle.getString("programTittel");
+        ovelser = ((MainActivity) getActivity()).dbHandler.getExercisesPerProgram(tittel);
 
-        //handling listview
+        currentExercise = ovelser.get(0);
+
+        //dropdown
+        exerciseDropdown = view.findViewById(R.id.exerciseDropdown);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, ovelser);
+        }
+        exerciseDropdown.setAdapter(adapter);
+        setupDropdownListener();
+
+        //listview
         log_workout_listView = view.findViewById(R.id.log_workout_listView);
         list = new ArrayList<>();
-        readItems();
+        readItems(currentExercise);
 
-        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this, exerciseTittel, programTittel);
+        loggingListAdapter = new LoggingListAdapter(getActivity(), list, this, currentExercise, tittel);
         log_workout_listView.setAdapter(loggingListAdapter);
 
         //EDIT TEXT HANDLING
@@ -100,7 +113,7 @@ public class LogWorkout extends Fragment {
                     repsET.setText("0");
                 }
 
-                ((MainActivity) getActivity()).dbHandler.saveToLogging(new Logging(programTittel, tittelTV.getText().toString(),
+                ((MainActivity) getActivity()).dbHandler.saveToLogging(new Logging(tittel, currentExercise,
                         weightET.getText().toString(), repsET.getText().toString(), ((MainActivity) getActivity()).getMesurement()));
 
                 ListAdapterItem item = new ListAdapterItem(weightET.getText().toString(), repsET.getText().toString());
@@ -113,26 +126,12 @@ public class LogWorkout extends Fragment {
             }
         });
 
-        //BACK BUTTON HANDLING
-        ImageButton backButton = view.findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
-        //TESTINGPURPOSES
-        //saveForTesting();
 
         return view;
     }
 
-    public void deleteLogLine(ListAdapterItem line) {
-        ((MainActivity) getActivity()).dbHandler.deleteLogLine(programTittel, exerciseTittel, line);
-    }
-
-    private void readItems() {
-        ArrayList<ListAdapterItem> logging = ((MainActivity) getActivity()).dbHandler.getLogginPerExerciseDate(exerciseTittel, programTittel);
+    private void readItems(String ovelseNavn) {
+        ArrayList<ListAdapterItem> logging = ((MainActivity) getActivity()).dbHandler.getLogginPerExerciseDate(ovelseNavn, tittel);
         if (!logging.isEmpty()) {
             for (ListAdapterItem s : logging) {
                 list.add(0, s);
@@ -140,25 +139,25 @@ public class LogWorkout extends Fragment {
         }
     }
 
-    //method to add logs for different dates for testing purposes
-/*
-    private void saveForTesting() {
-        Logging log1 = new Logging(programTittel, tittelTV.getText().toString(), "35", "4", "kg");
-        Logging log2 = new Logging(programTittel, tittelTV.getText().toString(), "50", "66", "kg");
-        Logging log3 = new Logging(programTittel, tittelTV.getText().toString(), "222", "78", "kg");
-        Logging log4 = new Logging(programTittel, tittelTV.getText().toString(), "745", "32", "kg");
 
-        log1.setDato("2019-08-01");
-        log2.setDato("2019-08-02");
-        log3.setDato("2019-08-03");
-        log4.setDato("2019-08-05");
+    private void setupDropdownListener() {
+        exerciseDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getActivity(), ovelser.get(position), Toast.LENGTH_LONG).show();
+                currentExercise = ovelser.get(position);
+                list.clear();
+                readItems(ovelser.get(position));
+                loggingListAdapter = new LoggingListAdapter(getActivity(), list, this, ovelser.get(position), tittel);
+                log_workout_listView.setAdapter(loggingListAdapter);
 
-        ((MainActivity) getActivity()).dbHandler.saveToLogging(log1);
-        ((MainActivity) getActivity()).dbHandler.saveToLogging(log2);
-        ((MainActivity) getActivity()).dbHandler.saveToLogging(log3);
-        ((MainActivity) getActivity()).dbHandler.saveToLogging(log4);
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
-*/
-
 }

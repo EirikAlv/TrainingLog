@@ -63,7 +63,9 @@ public class ChooseProgramFragment extends android.app.Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putString("programTittel", list.get(position));
-                ((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
+                //testing new log fragment
+                ((MainActivity)getActivity()).switchScreen(thisFragment, new LogWorkoutFragment(), bundle);
+                //((MainActivity)getActivity()).switchScreen(thisFragment, new ChooseExerciseFragment(), bundle);
 
             }
         });

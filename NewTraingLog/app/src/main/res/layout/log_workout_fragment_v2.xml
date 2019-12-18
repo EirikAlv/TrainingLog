@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <Spinner
+        android:id="@+id/exerciseDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textAlignment="center"/>
+
+
+    <EditText
+        android:id="@+id/weightET"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/exerciseDropdown"
+        android:ems="10"
+        android:hint="Weight"
+        android:layout_alignParentLeft="true"
+        android:inputType="numberDecimal"
+        android:textSize="20dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="4dp"
+        style="@style/customEditTextStyle"
+        android:maxLength="6"
+        />
+
+    <EditText
+        android:id="@+id/repsET"
+        android:layout_toRightOf="@id/weightET"
+        android:layout_toLeftOf="@id/addButton"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/exerciseDropdown"
+        style="@style/customEditTextStyle"
+        android:inputType="numberDecimal"
+        android:hint="Reps"
+        android:paddingTop="7dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:maxLength="6"
+        />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/exerciseDropdown"
+        android:text="Add"
+        android:textColor="@color/textColor"
+        android:layout_alignParentRight="true"
+        />
+
+    <ListView
+        android:id="@+id/log_workout_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/weightET"
+        android:padding="15dp"
+        android:layout_above="@+id/navigation"
+        style="@style/customListViewStyle"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation_items"
+        style="@style/bottomNavStyle"
+        app:itemIconTint="@color/bottomNavTint"
+        app:itemTextColor="@color/bottomTextColor"
+        />
+
+</RelativeLayout>
